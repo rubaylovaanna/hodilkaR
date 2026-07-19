@@ -214,7 +214,7 @@
   .board-wrapper {
     position: relative;
     width: 100%;
-    max-width: 1200px;
+    max-width: 1000px;
     margin: 0 auto;
     padding-top: 20px;
   }
@@ -223,8 +223,8 @@
     position: relative;
     width: 100%;
     height: 0;
-    padding-bottom: 58.33%; /* 700/1200 = 58.33% */
-    max-height: 700px;
+    padding-bottom: 100%; /* 1000/1000 = 100% для квадратного поля 4×4 */
+    max-height: 1000px;
   }
 
   .board-inner {
@@ -244,85 +244,85 @@
   }
 
   .cell {
-    width: 110px;
-    height: 110px;
+    width: 200px;
+    height: 200px;
     background: linear-gradient(135deg, #ffffff 0%, #f0f0f0 100%);
-    border: 4px solid #fff;
-    border-radius: 20px;
+    border: 5px solid #fff;
+    border-radius: 25px;
     overflow: hidden;
-    box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
     transition: all 0.3s;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 8px;
+    padding: 10px;
     font-family: 'Nunito', sans-serif;
   }
 
   .cell:hover {
-    transform: scale(1.1);
-    box-shadow: 0 12px 35px rgba(0,0,0,0.4);
+    transform: scale(1.05);
+    box-shadow: 0 15px 40px rgba(0,0,0,0.4);
   }
 
   .cell.start {
     border-color: #4CAF50;
-    box-shadow: 0 0 20px rgba(76,175,80,0.6);
+    box-shadow: 0 0 25px rgba(76,175,80,0.6);
     animation: glow 2s infinite;
   }
 
   .cell.finish {
     border-color: #FFD700;
-    box-shadow: 0 0 20px rgba(255,215,0,0.6);
+    box-shadow: 0 0 25px rgba(255,215,0,0.6);
     animation: pulse 1.5s infinite;
   }
 
   .cell img.cell-image {
-    width: 70%;
-    height: 70%;
+    width: 80%;
+    height: 80%;
     object-fit: contain;
-    border-radius: 8px;
+    border-radius: 10px;
   }
 
   .cell-number {
     position: absolute;
-    top: 5px;
-    left: 5px;
-    background: rgba(255,255,255,0.9);
-    padding: 2px 8px;
-    border-radius: 10px;
-    font-size: 14px;
-    font-weight: 800;
+    top: 8px;
+    left: 8px;
+    background: rgba(255,255,255,0.95);
+    padding: 4px 12px;
+    border-radius: 12px;
+    font-size: 18px;
+    font-weight: 900;
     color: #333;
     z-index: 2;
     font-family: 'Nunito', sans-serif;
   }
 
   .cell-label {
-    margin-top: 8px;
+    margin-top: 12px;
     color: white;
-    font-size: 13px;
-    font-weight: 700;
+    font-size: 16px;
+    font-weight: 800;
     text-align: center;
-    text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+    text-shadow: 0 2px 6px rgba(0,0,0,0.6);
     font-family: 'Nunito', sans-serif;
-    max-width: 110px;
+    max-width: 200px;
     word-wrap: break-word;
     line-height: 1.2;
   }
 
   @keyframes glow {
-    0%, 100% { box-shadow: 0 0 20px rgba(76,175,80,0.6); }
-    50% { box-shadow: 0 0 40px rgba(76,175,80,0.9); }
+    0%, 100% { box-shadow: 0 0 25px rgba(76,175,80,0.6); }
+    50% { box-shadow: 0 0 50px rgba(76,175,80,0.9); }
   }
 
   @keyframes pulse {
     0%, 100% { 
       transform: scale(1); 
-      box-shadow: 0 0 20px rgba(255,215,0,0.6); 
+      box-shadow: 0 0 25px rgba(255,215,0,0.6); 
     }
     50% { 
-      transform: scale(1.1); 
-      box-shadow: 0 0 40px rgba(255,215,0,0.9); 
+      transform: scale(1.05); 
+      box-shadow: 0 0 50px rgba(255,215,0,0.9); 
     }
   }
 
@@ -340,9 +340,9 @@
   .path-line {
     fill: none;
     stroke: rgba(255,255,255,0.7);
-    stroke-width: 8;
+    stroke-width: 10;
     stroke-linecap: round;
-    stroke-dasharray: 15, 10;
+    stroke-dasharray: 20, 12;
     animation: dash 20s linear infinite;
   }
 
@@ -352,14 +352,15 @@
     }
   }
 
-  /* Кот */
+  /* Кот — меньше клетки, чтобы не закрывать картинку */
   .cat {
     position: absolute;
-    width: 100px;
-    height: 100px;
+    width: 130px;
+    height: 130px;
     z-index: 10;
     transition: all 0.7s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-    filter: drop-shadow(0 6px 12px rgba(0,0,0,0.4));
+    filter: drop-shadow(0 8px 16px rgba(0,0,0,0.5));
+    pointer-events: none;
   }
 
   .cat img {
@@ -369,24 +370,24 @@
   }
 
   .cat.moving {
-    animation: bounceMove 0.4s ease-in-out;
+    animation: bounceMove 0.5s ease-in-out;
   }
 
   @keyframes bounceMove {
     0%, 100% { transform: translateY(0) scale(1) rotate(0deg); }
-    25% { transform: translateY(-30px) scale(1.15) rotate(-5deg); }
+    25% { transform: translateY(-40px) scale(1.2) rotate(-8deg); }
     50% { transform: translateY(0) scale(1) rotate(0deg); }
-    75% { transform: translateY(-15px) scale(1.05) rotate(5deg); }
+    75% { transform: translateY(-20px) scale(1.1) rotate(8deg); }
   }
 
-  /* 3D КУБИК - фиксированный в правом верхнем углу */
+  /* 3D КУБИК */
   .dice-container {
     position: fixed;
     top: 20px;
     right: 20px;
-    width: 70px;
-    height: 70px;
-    perspective: 600px;
+    width: 80px;
+    height: 80px;
+    perspective: 700px;
     cursor: pointer;
     z-index: 100;
   }
@@ -409,32 +410,32 @@
 
   .face {
     position: absolute;
-    width: 70px;
-    height: 70px;
+    width: 80px;
+    height: 80px;
     background: linear-gradient(135deg, #ffffff 0%, #e0e0e0 100%);
-    border: 3px solid #2c3e50;
-    border-radius: 12px;
+    border: 4px solid #2c3e50;
+    border-radius: 15px;
     display: grid;
-    padding: 12px;
-    box-shadow: inset 0 0 20px rgba(0,0,0,0.1);
+    padding: 14px;
+    box-shadow: inset 0 0 25px rgba(0,0,0,0.1);
     backface-visibility: hidden;
   }
 
-  .face-1 { transform: rotateY(0deg) translateZ(35px); }
-  .face-6 { transform: rotateY(180deg) translateZ(35px); }
-  .face-3 { transform: rotateY(90deg) translateZ(35px); }
-  .face-4 { transform: rotateY(-90deg) translateZ(35px); }
-  .face-2 { transform: rotateX(90deg) translateZ(35px); }
-  .face-5 { transform: rotateX(-90deg) translateZ(35px); }
+  .face-1 { transform: rotateY(0deg) translateZ(40px); }
+  .face-6 { transform: rotateY(180deg) translateZ(40px); }
+  .face-3 { transform: rotateY(90deg) translateZ(40px); }
+  .face-4 { transform: rotateY(-90deg) translateZ(40px); }
+  .face-2 { transform: rotateX(90deg) translateZ(40px); }
+  .face-5 { transform: rotateX(-90deg) translateZ(40px); }
 
   .dot {
-    width: 12px;
-    height: 12px;
+    width: 14px;
+    height: 14px;
     background: linear-gradient(135deg, #e74c3c, #c0392b);
     border-radius: 50%;
     align-self: center;
     justify-self: center;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+    box-shadow: 0 2px 6px rgba(0,0,0,0.3);
   }
 
   .face-1 { 
@@ -443,38 +444,38 @@
     justify-content: center; 
   }
   .face-1 .dot { 
-    width: 18px; 
-    height: 18px; 
+    width: 22px; 
+    height: 22px; 
   }
 
-  .face-2 { grid-template: 1fr 1fr / 1fr; gap: 6px; }
+  .face-2 { grid-template: 1fr 1fr / 1fr; gap: 8px; }
   .face-2 .dot:nth-child(1) { justify-self: end; align-self: start; }
   .face-2 .dot:nth-child(2) { justify-self: start; align-self: end; }
 
-  .face-3 { grid-template: 1fr 1fr 1fr / 1fr; gap: 5px; }
+  .face-3 { grid-template: 1fr 1fr 1fr / 1fr; gap: 6px; }
   .face-3 .dot:nth-child(1) { justify-self: end; align-self: start; }
   .face-3 .dot:nth-child(2) { justify-self: center; align-self: center; }
   .face-3 .dot:nth-child(3) { justify-self: start; align-self: end; }
 
-  .face-4 { grid-template: 1fr 1fr / 1fr 1fr; gap: 8px; }
+  .face-4 { grid-template: 1fr 1fr / 1fr 1fr; gap: 10px; }
 
-  .face-5 { grid-template: 1fr 1fr 1fr / 1fr 1fr; gap: 6px; }
+  .face-5 { grid-template: 1fr 1fr 1fr / 1fr 1fr; gap: 8px; }
   .face-5 .dot:nth-child(5) { grid-column: 1 / 3; justify-self: center; }
 
-  .face-6 { grid-template: 1fr 1fr 1fr / 1fr 1fr; gap: 7px; }
+  .face-6 { grid-template: 1fr 1fr 1fr / 1fr 1fr; gap: 9px; }
 
   .dice-value {
     position: fixed;
-    top: 100px;
-    right: 30px;
+    top: 110px;
+    right: 35px;
     background: rgba(255,255,255,0.95);
-    width: 35px;
-    height: 35px;
+    width: 40px;
+    height: 40px;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 18px;
+    font-size: 20px;
     font-weight: 900;
     color: #e74c3c;
     box-shadow: 0 4px 15px rgba(0,0,0,0.3);
@@ -493,16 +494,16 @@
 
   .roll-hint {
     position: fixed;
-    top: 145px;
-    right: 20px;
+    top: 160px;
+    right: 25px;
     color: white;
-    font-size: 11px;
+    font-size: 12px;
     font-weight: 700;
     text-align: center;
     opacity: 0.9;
     text-shadow: 0 2px 4px rgba(0,0,0,0.5);
     animation: hintPulse 2s infinite;
-    width: 50px;
+    width: 60px;
     font-family: 'Nunito', sans-serif;
     z-index: 100;
   }
@@ -583,8 +584,8 @@
 
   .confetti {
     position: fixed;
-    width: 10px;
-    height: 10px;
+    width: 12px;
+    height: 12px;
     background: #f00;
     animation: fall 3s linear forwards;
     z-index: 999;
@@ -624,52 +625,52 @@
     }
     
     .cell {
-      width: 90px;
-      height: 90px;
-      padding: 6px;
+      width: 160px;
+      height: 160px;
+      padding: 8px;
     }
     
     .cell-label {
-      font-size: 11px;
-      max-width: 90px;
+      font-size: 14px;
+      max-width: 160px;
     }
     
     .cell-number {
-      font-size: 12px;
-      padding: 2px 6px;
+      font-size: 16px;
+      padding: 3px 10px;
     }
     
     .cat {
-      width: 80px;
-      height: 80px;
+      width: 100px;
+      height: 100px;
     }
     
     .dice-container {
-      width: 60px;
-      height: 60px;
+      width: 70px;
+      height: 70px;
       top: 15px;
       right: 15px;
     }
     
     .dice-value {
-      top: 85px;
-      right: 25px;
-      width: 30px;
-      height: 30px;
-      font-size: 16px;
+      top: 95px;
+      right: 30px;
+      width: 35px;
+      height: 35px;
+      font-size: 18px;
     }
     
     .roll-hint {
-      top: 125px;
-      font-size: 10px;
-      width: 45px;
+      top: 140px;
+      font-size: 11px;
+      width: 55px;
     }
   }
   
   /* Мобильные портрет */
   @media screen and (max-width: 768px) {
     .game-container {
-      padding: 10px 10px 80px 10px;
+      padding: 10px 10px 90px 10px;
     }
     
     .start-popup {
@@ -704,32 +705,32 @@
     }
     
     .cell {
-      width: 70px;
-      height: 70px;
-      border-radius: 12px;
-      border-width: 3px;
-      padding: 5px;
+      width: 120px;
+      height: 120px;
+      border-radius: 18px;
+      border-width: 4px;
+      padding: 6px;
     }
     
     .cell-label {
-      font-size: 10px;
-      max-width: 70px;
+      font-size: 12px;
+      max-width: 120px;
     }
     
     .cell-number {
-      font-size: 11px;
-      padding: 2px 5px;
+      font-size: 14px;
+      padding: 2px 8px;
     }
     
     .cat {
-      width: 60px;
-      height: 60px;
+      width: 75px;
+      height: 75px;
     }
     
     /* Кубик внизу справа на мобильных */
     .dice-container {
-      width: 55px;
-      height: 55px;
+      width: 60px;
+      height: 60px;
       top: auto;
       bottom: 20px;
       right: 15px;
@@ -737,11 +738,11 @@
     
     .dice-value {
       top: auto;
-      bottom: 85px;
+      bottom: 90px;
       right: 25px;
-      width: 28px;
-      height: 28px;
-      font-size: 14px;
+      width: 30px;
+      height: 30px;
+      font-size: 16px;
     }
     
     .roll-hint {
@@ -765,7 +766,7 @@
   /* Маленькие мобильные */
   @media screen and (max-width: 480px) {
     .game-container {
-      padding: 5px 5px 70px 5px;
+      padding: 5px 5px 80px 5px;
     }
     
     .start-popup {
@@ -799,25 +800,25 @@
     }
     
     .cell {
-      width: 55px;
-      height: 55px;
-      border-radius: 10px;
-      padding: 4px;
+      width: 90px;
+      height: 90px;
+      border-radius: 14px;
+      padding: 5px;
     }
     
     .cell-label {
-      font-size: 9px;
-      max-width: 55px;
+      font-size: 10px;
+      max-width: 90px;
     }
     
     .cell-number {
-      font-size: 10px;
-      padding: 1px 4px;
+      font-size: 12px;
+      padding: 2px 6px;
     }
     
     .cat {
-      width: 50px;
-      height: 50px;
+      width: 55px;
+      height: 55px;
     }
     
     .dice-container {
@@ -832,7 +833,7 @@
       right: 18px;
       width: 25px;
       height: 25px;
-      font-size: 12px;
+      font-size: 14px;
     }
   }
   
@@ -871,41 +872,41 @@
     }
     
     .cell {
-      width: 65px;
-      height: 65px;
-      padding: 5px;
+      width: 110px;
+      height: 110px;
+      padding: 6px;
     }
     
     .cell-label {
-      font-size: 10px;
-      max-width: 65px;
+      font-size: 11px;
+      max-width: 110px;
     }
     
     .cell-number {
-      font-size: 11px;
+      font-size: 13px;
     }
     
     .cat {
-      width: 55px;
-      height: 55px;
+      width: 70px;
+      height: 70px;
     }
     
     /* Кубик вверху справа в landscape */
     .dice-container {
-      width: 50px;
-      height: 50px;
+      width: 55px;
+      height: 55px;
       top: 10px;
       right: 10px;
       bottom: auto;
     }
     
     .dice-value {
-      top: 68px;
+      top: 75px;
       right: 18px;
       bottom: auto;
-      width: 25px;
-      height: 25px;
-      font-size: 12px;
+      width: 28px;
+      height: 28px;
+      font-size: 14px;
     }
     
     .roll-hint {
@@ -928,10 +929,10 @@
       <img src="assets/cat/cat2.png" alt="Кот Манул">
     </div>
     
-    <h2 class="popup-title">🎲 <span>Кот-ходилка</span> </h2>
+    <h2 class="popup-title">🎲 <span>Кот-ходилка</span> 🎲</h2>
     
     <div class="popup-rules">
-      <h3> Правила игры:</h3>
+      <h3>📋 Правила игры:</h3>
       <p>Привет, друг! Помоги коту манулу добежать до финиша!</p>
       <p>Бросай кубик, делай ходы и <strong>называй слово</strong>, на которое он прыгнет! <strong>Четко произноси звук!</strong></p>
       <em>💡 Для усложнения, можете придумать предложение с этим словом.</em>
@@ -984,8 +985,8 @@
 </div>
 
 <script>
-  const TOTAL_CELLS = 24;
-  const COLS = 6;
+  const TOTAL_CELLS = 16;
+  const COLS = 4;
   const ROWS = 4;
   let currentCell = 1;
   let isRolling = false;
@@ -1005,10 +1006,22 @@
   }
 
   const cellLabels = [
-    'старт', 'рак', 'ракета', 'радуга', 'роза', 'нора',
-    'рыба', 'комар', 'сыр', 'топор', 'ворон', 'гитара',
-    'ромашка', 'корона', 'барабан', 'корова', 'морковь', 'паровоз',
-    'храм', 'торт', 'червяк', 'круг', 'гора', 'финиш'
+    'старт',    // 1
+    'рак',      // 2
+    'ракета',   // 3
+    'радуга',   // 4
+    'роза',     // 5
+    'нора',     // 6
+    'рыба',     // 7
+    'комар',    // 8
+    'сыр',      // 9
+    'топор',    // 10
+    'ворон',    // 11
+    'гитара',   // 12
+    'ромашка',  // 13
+    'корона',   // 14
+    'барабан',  // 15
+    'финиш'     // 16
   ];
 
   function startGame() {
@@ -1043,7 +1056,6 @@
 
   function createBoard() {
     const boardInner = document.getElementById('boardInner');
-    // Очищаем всё кроме SVG
     const svg = document.getElementById('pathSvg');
     boardInner.innerHTML = '';
     boardInner.appendChild(svg);
@@ -1100,10 +1112,15 @@
     const boardInner = document.getElementById('boardInner');
     const boardRect = boardInner.getBoundingClientRect();
     
-    cat.style.width = pos.size + 'px';
-    cat.style.height = pos.size + 'px';
-    cat.style.left = (boardRect.left + pos.x) + 'px';
-    cat.style.top = (boardRect.top + pos.y + window.scrollY) + 'px';
+    // Кот позиционируется по центру клетки
+    const catSize = pos.size * 0.65; // Кот = 65% от размера клетки
+    const offsetX = (pos.size - catSize) / 2;
+    const offsetY = (pos.size - catSize) / 2;
+    
+    cat.style.width = catSize + 'px';
+    cat.style.height = catSize + 'px';
+    cat.style.left = (boardRect.left + pos.x + offsetX) + 'px';
+    cat.style.top = (boardRect.top + pos.y + offsetY + window.scrollY) + 'px';
   }
 
   function getRotationForFace(faceNumber) {
