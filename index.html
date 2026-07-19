@@ -1,0 +1,1245 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>🐱 Ходилка с 3D кубиком</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  * { 
+    margin: 0; 
+    padding: 0; 
+    box-sizing: border-box; 
+  }
+  
+  body {
+    font-family: 'Nunito', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    overflow: hidden;
+    position: relative;
+    touch-action: none;
+  }
+
+  .game-container {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    max-width: 1400px;
+    max-height: 900px;
+    margin: 0 auto;
+  }
+
+  /* ==================== СТАРТОВЫЙ ПОПАП ==================== */
+  .start-popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(10px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2000;
+    animation: fadeIn 0.5s;
+  }
+
+  .start-popup-overlay.hidden {
+    display: none;
+  }
+
+  .start-popup {
+    background: linear-gradient(135deg, #ffffff 0%, #f5f5f5 100%);
+    border-radius: 30px;
+    padding: 40px;
+    max-width: 600px;
+    width: 90%;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+    animation: popIn 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    position: relative;
+    overflow: hidden;
+    font-family: 'Nunito', sans-serif;
+  }
+
+  .start-popup::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 8px;
+    background: linear-gradient(90deg, #4CAF50, #FFD700, #FF6B6B, #4CAF50);
+    background-size: 200% 100%;
+    animation: rainbow 3s linear infinite;
+  }
+
+  @keyframes rainbow {
+    0% { background-position: 0% 50%; }
+    100% { background-position: 200% 50%; }
+  }
+
+  .popup-cat-image {
+    width: 150px;
+    height: 150px;
+    margin: 0 auto 20px;
+    display: block;
+    animation: bounce 2s infinite;
+  }
+
+  .popup-cat-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    filter: drop-shadow(0 8px 16px rgba(0,0,0,0.2));
+  }
+
+  .popup-title {
+    text-align: center;
+    font-size: 32px;
+    font-weight: 900;
+    color: #333;
+    margin-bottom: 25px;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+    font-family: 'Nunito', sans-serif;
+  }
+
+  .popup-title span {
+    color: #4CAF50;
+  }
+
+  .popup-rules {
+    background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+    border-radius: 20px;
+    padding: 25px;
+    margin-bottom: 30px;
+    border-left: 6px solid #4CAF50;
+    font-family: 'Nunito', sans-serif;
+  }
+
+  .popup-rules h3 {
+    color: #1976d2;
+    font-size: 20px;
+    font-weight: 800;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-family: 'Nunito', sans-serif;
+  }
+
+  .popup-rules p {
+    color: #333;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 1.6;
+    margin-bottom: 12px;
+    font-family: 'Nunito', sans-serif;
+  }
+
+  .popup-rules p:last-child {
+    margin-bottom: 0;
+  }
+
+  .popup-rules em {
+    color: #555;
+    font-style: italic;
+    font-weight: 600;
+    display: block;
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 2px dashed #90caf9;
+    font-family: 'Nunito', sans-serif;
+  }
+
+  .popup-rules strong {
+    color: #d32f2f;
+    font-weight: 800;
+  }
+
+  .start-button {
+    display: block;
+    width: 100%;
+    padding: 20px;
+    font-size: 28px;
+    font-weight: 900;
+    color: white;
+    background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    box-shadow: 0 8px 25px rgba(76, 175, 80, 0.4);
+    transition: all 0.3s;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-family: 'Nunito', sans-serif;
+  }
+
+  .start-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 35px rgba(76, 175, 80, 0.6);
+  }
+
+  .start-button:active {
+    transform: translateY(0);
+  }
+
+  @keyframes popIn {
+    0% { 
+      opacity: 0;
+      transform: scale(0.5) rotate(-5deg);
+    }
+    100% { 
+      opacity: 1;
+      transform: scale(1) rotate(0deg);
+    }
+  }
+
+  @keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+  }
+
+  /* ==================== ИГРОВОЕ ПОЛЕ ==================== */
+  .board {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 1200px;
+    height: 700px;
+  }
+
+  .cell-wrapper {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: 5;
+  }
+
+  .cell {
+    width: 110px;
+    height: 110px;
+    background: linear-gradient(135deg, #ffffff 0%, #f0f0f0 100%);
+    border: 4px solid #fff;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px;
+    font-family: 'Nunito', sans-serif;
+  }
+
+  .cell:hover {
+    transform: scale(1.1);
+    box-shadow: 0 12px 35px rgba(0,0,0,0.4);
+  }
+
+  .cell.start {
+    border-color: #4CAF50;
+    box-shadow: 0 0 20px rgba(76,175,80,0.6);
+    animation: glow 2s infinite;
+  }
+
+  .cell.finish {
+    border-color: #FFD700;
+    box-shadow: 0 0 20px rgba(255,215,0,0.6);
+    animation: pulse 1.5s infinite;
+  }
+
+  .cell img.cell-image {
+    width: 70%;
+    height: 70%;
+    object-fit: contain;
+    border-radius: 8px;
+  }
+
+  .cell-number {
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    background: rgba(255,255,255,0.9);
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 800;
+    color: #333;
+    z-index: 2;
+    font-family: 'Nunito', sans-serif;
+  }
+
+  .cell-label {
+    margin-top: 8px;
+    color: white;
+    font-size: 13px;
+    font-weight: 700;
+    text-align: center;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+    font-family: 'Nunito', sans-serif;
+    max-width: 110px;
+    word-wrap: break-word;
+    line-height: 1.2;
+  }
+
+  @keyframes glow {
+    0%, 100% { box-shadow: 0 0 20px rgba(76,175,80,0.6); }
+    50% { box-shadow: 0 0 40px rgba(76,175,80,0.9); }
+  }
+
+  @keyframes pulse {
+    0%, 100% { 
+      transform: scale(1); 
+      box-shadow: 0 0 20px rgba(255,215,0,0.6); 
+    }
+    50% { 
+      transform: scale(1.1); 
+      box-shadow: 0 0 40px rgba(255,215,0,0.9); 
+    }
+  }
+
+  /* SVG линия пути */
+  .path-svg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .path-line {
+    fill: none;
+    stroke: rgba(255,255,255,0.7);
+    stroke-width: 8;
+    stroke-linecap: round;
+    stroke-dasharray: 15, 10;
+    animation: dash 20s linear infinite;
+  }
+
+  @keyframes dash {
+    to {
+      stroke-dashoffset: -1000;
+    }
+  }
+
+  /* Кот */
+  .cat {
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    z-index: 10;
+    transition: all 0.7s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    filter: drop-shadow(0 6px 12px rgba(0,0,0,0.4));
+  }
+
+  .cat img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+
+  .cat.moving {
+    animation: bounceMove 0.4s ease-in-out;
+  }
+
+  @keyframes bounceMove {
+    0%, 100% { transform: translateY(0) scale(1) rotate(0deg); }
+    25% { transform: translateY(-30px) scale(1.15) rotate(-5deg); }
+    50% { transform: translateY(0) scale(1) rotate(0deg); }
+    75% { transform: translateY(-15px) scale(1.05) rotate(5deg); }
+  }
+
+  /* 3D КУБИК */
+  .dice-container {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 70px;
+    height: 70px;
+    perspective: 600px;
+    cursor: pointer;
+    z-index: 100;
+  }
+
+  .dice-container:hover {
+    transform: scale(1.05);
+  }
+
+  .dice-container:active {
+    transform: scale(0.95);
+  }
+
+  .dice {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    transform-style: preserve-3d;
+    transition: transform 1s ease-out;
+  }
+
+  .face {
+    position: absolute;
+    width: 70px;
+    height: 70px;
+    background: linear-gradient(135deg, #ffffff 0%, #e0e0e0 100%);
+    border: 3px solid #2c3e50;
+    border-radius: 12px;
+    display: grid;
+    padding: 12px;
+    box-shadow: inset 0 0 20px rgba(0,0,0,0.1);
+    backface-visibility: hidden;
+  }
+
+  .face-1 { transform: rotateY(0deg) translateZ(35px); }
+  .face-6 { transform: rotateY(180deg) translateZ(35px); }
+  .face-3 { transform: rotateY(90deg) translateZ(35px); }
+  .face-4 { transform: rotateY(-90deg) translateZ(35px); }
+  .face-2 { transform: rotateX(90deg) translateZ(35px); }
+  .face-5 { transform: rotateX(-90deg) translateZ(35px); }
+
+  .dot {
+    width: 12px;
+    height: 12px;
+    background: linear-gradient(135deg, #e74c3c, #c0392b);
+    border-radius: 50%;
+    align-self: center;
+    justify-self: center;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+  }
+
+  .face-1 { 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+  }
+  .face-1 .dot { 
+    width: 18px; 
+    height: 18px; 
+  }
+
+  .face-2 { grid-template: 1fr 1fr / 1fr; gap: 6px; }
+  .face-2 .dot:nth-child(1) { justify-self: end; align-self: start; }
+  .face-2 .dot:nth-child(2) { justify-self: start; align-self: end; }
+
+  .face-3 { grid-template: 1fr 1fr 1fr / 1fr; gap: 5px; }
+  .face-3 .dot:nth-child(1) { justify-self: end; align-self: start; }
+  .face-3 .dot:nth-child(2) { justify-self: center; align-self: center; }
+  .face-3 .dot:nth-child(3) { justify-self: start; align-self: end; }
+
+  .face-4 { grid-template: 1fr 1fr / 1fr 1fr; gap: 8px; }
+
+  .face-5 { grid-template: 1fr 1fr 1fr / 1fr 1fr; gap: 6px; }
+  .face-5 .dot:nth-child(5) { grid-column: 1 / 3; justify-self: center; }
+
+  .face-6 { grid-template: 1fr 1fr 1fr / 1fr 1fr; gap: 7px; }
+
+  .dice-value {
+    position: absolute;
+    top: 100px;
+    right: 30px;
+    background: rgba(255,255,255,0.95);
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    font-weight: 900;
+    color: #e74c3c;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    z-index: 100;
+    opacity: 0;
+    transform: scale(0);
+    transition: all 0.3s;
+    font-family: 'Nunito', sans-serif;
+  }
+
+  .dice-value.show {
+    opacity: 1;
+    transform: scale(1);
+    animation: popIn 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  }
+
+  .win-message {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.85);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    flex-direction: column;
+    backdrop-filter: blur(5px);
+    font-family: 'Nunito', sans-serif;
+  }
+
+  .win-message.show {
+    display: flex;
+    animation: fadeIn 0.5s;
+  }
+
+  .win-message h1 {
+    color: #FFD700;
+    font-size: 72px;
+    font-weight: 900;
+    text-shadow: 0 0 30px rgba(255,215,0,0.8);
+    margin-bottom: 20px;
+    animation: celebrate 1s infinite;
+    font-family: 'Nunito', sans-serif;
+  }
+
+  @keyframes celebrate {
+    0%, 100% { transform: scale(1) rotate(0deg); }
+    25% { transform: scale(1.1) rotate(-3deg); }
+    75% { transform: scale(1.1) rotate(3deg); }
+  }
+
+  .win-message p {
+    color: white;
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 40px;
+    font-family: 'Nunito', sans-serif;
+  }
+
+  .win-message button {
+    padding: 18px 50px;
+    font-size: 24px;
+    font-weight: 800;
+    background: linear-gradient(135deg, #4CAF50, #45a049);
+    color: white;
+    border: none;
+    border-radius: 40px;
+    cursor: pointer;
+    box-shadow: 0 6px 20px rgba(76,175,80,0.5);
+    transition: all 0.3s;
+    font-family: 'Nunito', sans-serif;
+  }
+
+  .win-message button:hover {
+    transform: scale(1.1);
+    box-shadow: 0 8px 30px rgba(76,175,80,0.7);
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  .roll-hint {
+    position: absolute;
+    top: 100px;
+    right: 10px;
+    color: white;
+    font-size: 11px;
+    font-weight: 700;
+    text-align: center;
+    opacity: 0.9;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+    animation: hintPulse 2s infinite;
+    width: 50px;
+    font-family: 'Nunito', sans-serif;
+  }
+
+  @keyframes hintPulse {
+    0%, 100% { opacity: 0.6; }
+    50% { opacity: 1; }
+  }
+
+  .confetti {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background: #f00;
+    animation: fall 3s linear forwards;
+  }
+
+  @keyframes fall {
+    to {
+      transform: translateY(100vh) rotate(720deg);
+      opacity: 0;
+    }
+  }
+
+  /* ==================== АДАПТИВНАЯ ВЕРСИЯ ==================== */
+  
+  @media screen and (max-width: 1024px) {
+    .start-popup {
+      padding: 30px;
+    }
+    
+    .popup-cat-image {
+      width: 120px;
+      height: 120px;
+    }
+    
+    .popup-title {
+      font-size: 26px;
+    }
+    
+    .popup-rules p {
+      font-size: 14px;
+    }
+    
+    .start-button {
+      font-size: 24px;
+      padding: 18px;
+    }
+    
+    .board {
+      width: 90vw;
+      height: 60vh;
+      max-width: 900px;
+      max-height: 500px;
+    }
+    
+    .cell {
+      width: 90px;
+      height: 90px;
+      padding: 6px;
+    }
+    
+    .cell-label {
+      font-size: 11px;
+      max-width: 90px;
+    }
+    
+    .cell-number {
+      font-size: 12px;
+      padding: 2px 6px;
+    }
+    
+    .cat {
+      width: 80px;
+      height: 80px;
+    }
+    
+    .dice-container {
+      width: 60px;
+      height: 60px;
+      top: 15px;
+      right: 15px;
+    }
+    
+    .dice-value {
+      top: 85px;
+      right: 25px;
+      width: 30px;
+      height: 30px;
+      font-size: 16px;
+    }
+    
+    .roll-hint {
+      top: 125px;
+      font-size: 10px;
+      width: 45px;
+    }
+  }
+  
+  @media screen and (max-width: 768px) {
+    .start-popup {
+      padding: 25px;
+    }
+    
+    .popup-cat-image {
+      width: 100px;
+      height: 100px;
+    }
+    
+    .popup-title {
+      font-size: 22px;
+      margin-bottom: 20px;
+    }
+    
+    .popup-rules {
+      padding: 20px;
+    }
+    
+    .popup-rules h3 {
+      font-size: 18px;
+    }
+    
+    .popup-rules p {
+      font-size: 13px;
+    }
+    
+    .start-button {
+      font-size: 20px;
+      padding: 15px;
+    }
+    
+    .board {
+      width: 95vw;
+      height: 55vh;
+      max-width: 600px;
+      max-height: 400px;
+    }
+    
+    .cell {
+      width: 70px;
+      height: 70px;
+      border-radius: 12px;
+      border-width: 3px;
+      padding: 5px;
+    }
+    
+    .cell-label {
+      font-size: 10px;
+      max-width: 70px;
+    }
+    
+    .cell-number {
+      font-size: 11px;
+      padding: 2px 5px;
+    }
+    
+    .cat {
+      width: 60px;
+      height: 60px;
+    }
+    
+    .dice-container {
+      width: 55px;
+      height: 55px;
+      top: auto;
+      bottom: 15px;
+      right: 15px;
+    }
+    
+    .dice-value {
+      top: auto;
+      bottom: 80px;
+      right: 25px;
+      width: 28px;
+      height: 28px;
+      font-size: 14px;
+    }
+    
+    .roll-hint {
+      display: none;
+    }
+    
+    .win-message h1 {
+      font-size: 42px;
+    }
+    
+    .win-message p {
+      font-size: 20px;
+    }
+    
+    .win-message button {
+      padding: 15px 35px;
+      font-size: 18px;
+    }
+  }
+  
+  @media screen and (max-width: 480px) {
+    .start-popup {
+      padding: 20px;
+    }
+    
+    .popup-cat-image {
+      width: 80px;
+      height: 80px;
+    }
+    
+    .popup-title {
+      font-size: 20px;
+    }
+    
+    .popup-rules {
+      padding: 15px;
+    }
+    
+    .popup-rules h3 {
+      font-size: 16px;
+    }
+    
+    .popup-rules p {
+      font-size: 12px;
+    }
+    
+    .start-button {
+      font-size: 18px;
+      padding: 12px;
+    }
+    
+    .board {
+      width: 95vw;
+      height: 50vh;
+    }
+    
+    .cell {
+      width: 55px;
+      height: 55px;
+      border-radius: 10px;
+      padding: 4px;
+    }
+    
+    .cell-label {
+      font-size: 9px;
+      max-width: 55px;
+    }
+    
+    .cell-number {
+      font-size: 10px;
+      padding: 1px 4px;
+    }
+    
+    .cat {
+      width: 50px;
+      height: 50px;
+    }
+    
+    .dice-container {
+      width: 50px;
+      height: 50px;
+      bottom: 12px;
+      right: 12px;
+    }
+    
+    .dice-value {
+      bottom: 70px;
+      right: 20px;
+      width: 25px;
+      height: 25px;
+      font-size: 12px;
+    }
+  }
+  
+  @media screen and (max-height: 500px) and (orientation: landscape) {
+    .start-popup {
+      padding: 20px;
+    }
+    
+    .popup-cat-image {
+      width: 80px;
+      height: 80px;
+    }
+    
+    .popup-title {
+      font-size: 20px;
+      margin-bottom: 15px;
+    }
+    
+    .popup-rules {
+      padding: 15px;
+      margin-bottom: 20px;
+    }
+    
+    .start-button {
+      font-size: 18px;
+      padding: 12px;
+    }
+    
+    .board {
+      width: 70vw;
+      height: 90vh;
+    }
+    
+    .cell {
+      width: 65px;
+      height: 65px;
+      padding: 5px;
+    }
+    
+    .cell-label {
+      font-size: 10px;
+      max-width: 65px;
+    }
+    
+    .cell-number {
+      font-size: 11px;
+    }
+    
+    .cat {
+      width: 55px;
+      height: 55px;
+    }
+    
+    .dice-container {
+      width: 50px;
+      height: 50px;
+      top: 10px;
+      right: 10px;
+    }
+    
+    .dice-value {
+      top: 68px;
+      right: 18px;
+      width: 25px;
+      height: 25px;
+      font-size: 12px;
+    }
+    
+    .roll-hint {
+      display: none;
+      top: 75px;
+    }
+  }
+</style>
+</head>
+<body>
+
+<!-- ==================== АУДИО ФАЙЛЫ ==================== -->
+<audio id="soundJump" src="assets/sounds/cartoon-jump.mp3" preload="auto"></audio>
+<audio id="soundDiceRoll" src="assets/sounds/dice-roll.mp3" preload="auto"></audio>
+<audio id="soundWin" src="assets/sounds/win.mp3" preload="auto"></audio>
+
+<!-- ==================== СТАРТОВЫЙ ПОПАП (cat2.png) ==================== -->
+<div class="start-popup-overlay" id="startPopup">
+  <div class="start-popup">
+    <div class="popup-cat-image">
+      <img src="assets/cat/cat2.png" alt="Кот Манул">
+    </div>
+    
+    <h2 class="popup-title">🎲 <span>Кот-ходилка</span> 🎲</h2>
+    
+    <div class="popup-rules">
+      <h3>📋 Правила игры:</h3>
+      <p>Привет, друг! Помоги коту манулу добежать до финиша!</p>
+      <p>Бросай кубик, делай ход и <strong>называй слово</strong>, на которое он прыгнет! <strong>Четко произноси звук!</strong></p>
+      <em>💡 Для усложнения, можете придумать предложение с этим словом.</em>
+    </div>
+    
+    <button class="start-button" onclick="startGame()"> СТАРТ</button>
+  </div>
+</div>
+
+<!-- ==================== ИГРА (cat.png) ==================== -->
+<div class="game-container">
+  <!-- Игровое поле -->
+  <div class="board" id="board">
+    <svg class="path-svg" id="pathSvg">
+      <path class="path-line" id="pathLine" />
+    </svg>
+  </div>
+
+  <!-- Кот (cat.png для ходилки) -->
+  <div class="cat" id="cat">
+    <img src="assets/cat/cat.png" alt="Кот" id="catImg">
+  </div>
+
+  <!-- 3D Кубик -->
+  <div class="dice-container" id="diceContainer" onclick="rollDice()">
+    <div class="dice" id="dice">
+      <div class="face face-1"><div class="dot"></div></div>
+      <div class="face face-2"><div class="dot"></div><div class="dot"></div></div>
+      <div class="face face-3"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
+      <div class="face face-4"><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
+      <div class="face face-5"><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
+      <div class="face face-6"><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
+    </div>
+  </div>
+  
+  <!-- Число на кубике -->
+  <div class="dice-value" id="diceValue"></div>
+  
+  <div class="roll-hint"><br>Кликни, чтобы<br>бросить</div>
+
+  <!-- Сообщение о победе -->
+  <div class="win-message" id="winMessage">
+    <h1>🎉 ПОБЕДА! 🎉</h1>
+    <p>Кот добрался до финиша!</p>
+    <button onclick="resetGame()">Играть снова</button>
+  </div>
+</div>
+
+<script>
+  // Конфигурация игры
+  const TOTAL_CELLS = 24;
+  const COLS = 6;
+  const ROWS = 4;
+  let currentCell = 1;
+  let isRolling = false;
+  let isMoving = false;
+  let currentDiceValue = 0;
+  let gameStarted = false;
+
+  // Аудио элементы
+  const soundJump = document.getElementById('soundJump');
+  const soundDiceRoll = document.getElementById('soundDiceRoll');
+  const soundWin = document.getElementById('soundWin');
+
+  // Функция воспроизведения звука (с перезапуском)
+  function playSound(audio) {
+    if (audio) {
+      audio.currentTime = 0;
+      audio.play().catch(e => console.log('Звук не воспроизведён:', e));
+    }
+  }
+
+  // Названия для клеток
+  const cellLabels = [
+    'старт',    // 1
+    'рак',      // 2
+    'ракета',   // 3
+    'радуга',   // 4
+    'роза',     // 5
+    'нора',     // 6
+    'рыба',     // 7
+    'комар',    // 8
+    'сыр',      // 9
+    'топор',    // 10
+    'ворон',    // 11
+    'гитара',   // 12
+    'ромашка',  // 13
+    'корона',   // 14
+    'барабан',  // 15
+    'корова',   // 16
+    'морковь',  // 17
+    'паровоз',  // 18
+    'храм',     // 19
+    'торт',     // 20
+    'червяк',   // 21
+    'круг',     // 22
+    'гора',     // 23
+    'финиш'     // 24
+  ];
+
+  // Запуск игры
+  function startGame() {
+    gameStarted = true;
+    document.getElementById('startPopup').classList.add('hidden');
+  }
+
+  // Вычисление позиции клетки
+  function getCellPosition(cellNum) {
+    const board = document.getElementById('board');
+    const boardWidth = board.offsetWidth;
+    const boardHeight = board.offsetHeight;
+    
+    const cellSize = Math.min(boardWidth / COLS, boardHeight / ROWS) * 0.85;
+    const paddingX = boardWidth * 0.08;
+    const paddingY = boardHeight * 0.08;
+    
+    const row = Math.floor((cellNum - 1) / COLS);
+    const colInRow = (cellNum - 1) % COLS;
+    const col = row % 2 === 0 ? colInRow : (COLS - 1 - colInRow);
+    
+    const x = paddingX + col * ((boardWidth - 2 * paddingX) / (COLS - 1)) - cellSize / 2;
+    const y = paddingY + row * ((boardHeight - 2 * paddingY) / (ROWS - 1)) - cellSize / 2;
+    
+    return { 
+      x, 
+      y, 
+      centerX: x + cellSize / 2, 
+      centerY: y + cellSize / 2,
+      size: cellSize
+    };
+  }
+
+  // Создание игрового поля
+  function createBoard() {
+    const board = document.getElementById('board');
+    const pathPoints = [];
+
+    for (let i = 1; i <= TOTAL_CELLS; i++) {
+      const pos = getCellPosition(i);
+      
+      // Создаем обертку для клетки и подписи
+      const wrapper = document.createElement('div');
+      wrapper.className = 'cell-wrapper';
+      wrapper.id = `cell-wrapper-${i}`;
+      wrapper.style.left = pos.x + 'px';
+      wrapper.style.top = pos.y + 'px';
+      
+      // Клетка
+      const cell = document.createElement('div');
+      cell.className = 'cell';
+      cell.id = `cell-${i}`;
+      cell.style.width = pos.size + 'px';
+      cell.style.height = pos.size + 'px';
+
+      const img = document.createElement('img');
+      img.className = 'cell-image';
+      img.src = `assets/cells/cell-${String(i).padStart(2, '0')}.png`;
+      img.alt = cellLabels[i - 1];
+      cell.appendChild(img);
+      
+      const num = document.createElement('div');
+      num.className = 'cell-number';
+      num.textContent = i;
+      cell.appendChild(num);
+
+      if (i === 1) cell.classList.add('start');
+      if (i === TOTAL_CELLS) cell.classList.add('finish');
+
+      wrapper.appendChild(cell);
+      
+      // Подпись под клеткой
+      const label = document.createElement('div');
+      label.className = 'cell-label';
+      label.textContent = cellLabels[i - 1];
+      wrapper.appendChild(label);
+
+      board.appendChild(wrapper);
+      pathPoints.push(`${pos.centerX},${pos.centerY}`);
+    }
+
+    const pathLine = document.getElementById('pathLine');
+    pathLine.setAttribute('d', `M ${pathPoints.join(' L ')}`);
+  }
+
+  // Позиционирование кота
+  function positionCat(cellNum) {
+    const pos = getCellPosition(cellNum);
+    const cat = document.getElementById('cat');
+    const board = document.getElementById('board');
+    const boardRect = board.getBoundingClientRect();
+    const containerRect = document.querySelector('.game-container').getBoundingClientRect();
+    
+    const offsetX = boardRect.left - containerRect.left;
+    const offsetY = boardRect.top - containerRect.top;
+    
+    cat.style.width = pos.size + 'px';
+    cat.style.height = pos.size + 'px';
+    cat.style.left = (offsetX + pos.x) + 'px';
+    cat.style.top = (offsetY + pos.y) + 'px';
+  }
+
+  // Получить вращение для показа нужной грани
+  function getRotationForFace(faceNumber) {
+    const rotations = {
+      1: { x: 0, y: 0 },
+      2: { x: -90, y: 0 },
+      3: { x: 0, y: -90 },
+      4: { x: 0, y: 90 },
+      5: { x: 90, y: 0 },
+      6: { x: 180, y: 0 }
+    };
+    return rotations[faceNumber];
+  }
+
+  // Бросок 3D кубика
+  function rollDice() {
+    if (!gameStarted) return;
+    if (isRolling || isMoving) return;
+    if (currentCell >= TOTAL_CELLS) return;
+
+    isRolling = true;
+    const dice = document.getElementById('dice');
+    const diceValue = document.getElementById('diceValue');
+    
+    // Воспроизводим звук броска кубика
+    playSound(soundDiceRoll);
+    
+    const result = Math.floor(Math.random() * 6) + 1;
+    currentDiceValue = result;
+    
+    const targetRotation = getRotationForFace(result);
+    const extraSpins = 2;
+    const finalX = targetRotation.x + (extraSpins * 360);
+    const finalY = targetRotation.y + (extraSpins * 360);
+    
+    diceValue.classList.remove('show');
+    dice.style.transform = `rotateX(${finalX}deg) rotateY(${finalY}deg)`;
+    
+    setTimeout(() => {
+      diceValue.textContent = result;
+      diceValue.classList.add('show');
+      
+      isRolling = false;
+      moveCat(result);
+    }, 1000);
+  }
+
+  // Движение кота
+  async function moveCat(steps) {
+    isMoving = true;
+    const cat = document.getElementById('cat');
+    
+    for (let i = 0; i < steps; i++) {
+      if (currentCell >= TOTAL_CELLS) break;
+      
+      currentCell++;
+      
+      // Воспроизводим звук прыжка
+      playSound(soundJump);
+      
+      cat.classList.add('moving');
+      positionCat(currentCell);
+      
+      await new Promise(resolve => setTimeout(resolve, 700));
+      cat.classList.remove('moving');
+      
+      await new Promise(resolve => setTimeout(resolve, 150));
+    }
+
+    isMoving = false;
+
+    if (currentCell >= TOTAL_CELLS) {
+      setTimeout(() => {
+        showWinMessage();
+        createConfetti();
+      }, 500);
+    }
+  }
+
+  function showWinMessage() {
+    // Воспроизводим звук победы
+    playSound(soundWin);
+    document.getElementById('winMessage').classList.add('show');
+  }
+
+  function createConfetti() {
+    const colors = ['#f44336', '#e91e63', '#9c27b0', '#673ab7', '#3f51b5', '#2196f3', '#03a9f4', '#00bcd4', '#009688', '#4CAF50', '#8BC34A', '#CDDC39', '#FFEB3B', '#FFC107', '#FF9800', '#FF5722'];
+    
+    for (let i = 0; i < 100; i++) {
+      setTimeout(() => {
+        const confetti = document.createElement('div');
+        confetti.className = 'confetti';
+        confetti.style.left = Math.random() * 100 + 'vw';
+        confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
+        confetti.style.animationDuration = (Math.random() * 2 + 2) + 's';
+        confetti.style.borderRadius = Math.random() > 0.5 ? '50%' : '0';
+        document.body.appendChild(confetti);
+        
+        setTimeout(() => confetti.remove(), 4000);
+      }, i * 30);
+    }
+  }
+
+  function resetGame() {
+    currentCell = 1;
+    currentDiceValue = 0;
+    document.getElementById('winMessage').classList.remove('show');
+    document.getElementById('diceValue').classList.remove('show');
+    document.getElementById('dice').style.transform = 'rotateX(0deg) rotateY(0deg)';
+    positionCat(1);
+    
+    document.querySelectorAll('.confetti').forEach(c => c.remove());
+  }
+
+  window.addEventListener('load', () => {
+    createBoard();
+    positionCat(1);
+  });
+
+  window.addEventListener('resize', () => {
+    const board = document.getElementById('board');
+    board.innerHTML = '<svg class="path-svg" id="pathSvg"><path class="path-line" id="pathLine" /></svg>';
+    createBoard();
+    positionCat(currentCell);
+  });
+
+  window.addEventListener('keydown', (e) => {
+    if (e.code === 'Space') {
+      e.preventDefault();
+      rollDice();
+    }
+  });
+</script>
+
+</body>
+</html>
