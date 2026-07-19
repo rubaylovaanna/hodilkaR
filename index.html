@@ -37,7 +37,6 @@
     padding: 10px;
   }
 
-  /* ==================== СТАРТОВЫЙ ПОПАП ==================== */
   .start-popup-overlay {
     position: fixed;
     top: 0;
@@ -210,7 +209,6 @@
     50% { transform: translateY(-10px); }
   }
 
-  /* ==================== ИГРОВОЕ ПОЛЕ 3×6 ==================== */
   .board-wrapper {
     position: relative;
     width: 100%;
@@ -351,7 +349,6 @@
     }
   }
 
-  /* Кот — крупный, ходит по верхнему краю картинок */
   .cat {
     position: fixed;
     width: 180px;
@@ -379,7 +376,6 @@
     75% { transform: translateY(-25px) scale(1.1) rotate(8deg); }
   }
 
-  /* 3D КУБИК — ПРЕЖНИЙ РАЗМЕР (80px) */
   .dice-container {
     position: fixed;
     top: 20px;
@@ -597,8 +593,6 @@
     }
   }
 
-  /* ==================== АДАПТИВНАЯ ВЕРСИЯ ==================== */
-  
   @media screen and (max-width: 1200px) {
     .cell {
       width: 180px;
@@ -672,19 +666,6 @@
       top: 15px;
       right: 15px;
     }
-    
-    .face {
-      width: 70px;
-      height: 70px;
-      padding: 12px;
-    }
-    
-    .face-1 { transform: rotateY(0deg) translateZ(35px); }
-    .face-6 { transform: rotateY(180deg) translateZ(35px); }
-    .face-3 { transform: rotateY(90deg) translateZ(35px); }
-    .face-4 { transform: rotateY(-90deg) translateZ(35px); }
-    .face-2 { transform: rotateX(90deg) translateZ(35px); }
-    .face-5 { transform: rotateX(-90deg) translateZ(35px); }
     
     .dice-value {
       top: 95px;
@@ -767,19 +748,6 @@
       bottom: 20px;
       right: 15px;
     }
-    
-    .face {
-      width: 60px;
-      height: 60px;
-      padding: 10px;
-    }
-    
-    .face-1 { transform: rotateY(0deg) translateZ(30px); }
-    .face-6 { transform: rotateY(180deg) translateZ(30px); }
-    .face-3 { transform: rotateY(90deg) translateZ(30px); }
-    .face-4 { transform: rotateY(-90deg) translateZ(30px); }
-    .face-2 { transform: rotateX(90deg) translateZ(30px); }
-    .face-5 { transform: rotateX(-90deg) translateZ(30px); }
     
     .dice-value {
       top: auto;
@@ -872,19 +840,6 @@
       right: 10px;
     }
     
-    .face {
-      width: 50px;
-      height: 50px;
-      padding: 8px;
-    }
-    
-    .face-1 { transform: rotateY(0deg) translateZ(25px); }
-    .face-6 { transform: rotateY(180deg) translateZ(25px); }
-    .face-3 { transform: rotateY(90deg) translateZ(25px); }
-    .face-4 { transform: rotateY(-90deg) translateZ(25px); }
-    .face-2 { transform: rotateX(90deg) translateZ(25px); }
-    .face-5 { transform: rotateX(-90deg) translateZ(25px); }
-    
     .dice-value {
       bottom: 75px;
       right: 18px;
@@ -894,7 +849,6 @@
     }
   }
   
-  /* Мобильные альбомная ориентация — улучшенное позиционирование кота */
   @media screen and (max-height: 500px) and (orientation: landscape) {
     .game-container {
       padding: 10px 10px 10px 10px;
@@ -948,7 +902,6 @@
       font-size: 13px;
     }
     
-    /* Кот в landscape — корректное позиционирование */
     .cat {
       width: 75px;
       height: 75px;
@@ -961,19 +914,6 @@
       right: 10px;
       bottom: auto;
     }
-    
-    .face {
-      width: 55px;
-      height: 55px;
-      padding: 10px;
-    }
-    
-    .face-1 { transform: rotateY(0deg) translateZ(27px); }
-    .face-6 { transform: rotateY(180deg) translateZ(27px); }
-    .face-3 { transform: rotateY(90deg) translateZ(27px); }
-    .face-4 { transform: rotateY(-90deg) translateZ(27px); }
-    .face-2 { transform: rotateX(90deg) translateZ(27px); }
-    .face-5 { transform: rotateX(-90deg) translateZ(27px); }
     
     .dice-value {
       top: 75px;
@@ -992,19 +932,17 @@
 </head>
 <body>
 
-<!-- АУДИО ФАЙЛЫ -->
 <audio id="soundJump" src="assets/sounds/cartoon-jump.mp3" preload="auto"></audio>
 <audio id="soundDiceRoll" src="assets/sounds/dice-roll.mp3" preload="auto"></audio>
 <audio id="soundWin" src="assets/sounds/win.mp3" preload="auto"></audio>
 
-<!-- СТАРТОВЫЙ ПОПАП -->
 <div class="start-popup-overlay" id="startPopup">
   <div class="start-popup">
     <div class="popup-cat-image">
       <img src="assets/cat/cat2.png" alt="Кот Манул">
     </div>
     
-    <h2 class="popup-title"> <span>Кот-ходилка</span> 🎲</h2>
+    <h2 class="popup-title">🎲 <span>Кот-ходилка</span> 🎲</h2>
     
     <div class="popup-rules">
       <h3>📋 Правила игры:</h3>
@@ -1017,7 +955,6 @@
   </div>
 </div>
 
-<!-- ИГРА -->
 <div class="game-container">
   <div class="board-wrapper">
     <div class="board" id="board">
@@ -1029,12 +966,10 @@
     </div>
   </div>
 
-  <!-- Кот -->
   <div class="cat" id="cat">
     <img src="assets/cat/cat.png" alt="Кот" id="catImg">
   </div>
 
-  <!-- 3D Кубик -->
   <div class="dice-container" id="diceContainer" onclick="rollDice()">
     <div class="dice" id="dice">
       <div class="face face-1"><div class="dot"></div></div>
@@ -1046,12 +981,10 @@
     </div>
   </div>
   
-  <!-- Число на кубике -->
   <div class="dice-value" id="diceValue"></div>
   
   <div class="roll-hint">Кликни<br>бросить</div>
 
-  <!-- Сообщение о победе -->
   <div class="win-message" id="winMessage">
     <h1> ПОБЕДА! 🎉</h1>
     <p>Кот добрался до финиша!</p>
@@ -1081,24 +1014,9 @@
   }
 
   const cellLabels = [
-    'старт',    // 1
-    'рак',      // 2
-    'ракета',   // 3
-    'радуга',   // 4
-    'роза',     // 5
-    'нора',     // 6
-    'рыба',     // 7
-    'комар',    // 8
-    'сыр',      // 9
-    'топор',    // 10
-    'ворон',    // 11
-    'гитара',   // 12
-    'ромашка',  // 13
-    'корона',   // 14
-    'барабан',  // 15
-    'корова',   // 16
-    'морковь',  // 17
-    'финиш'     // 18
+    'старт', 'рак', 'ракета', 'радуга', 'роза', 'нора',
+    'рыба', 'комар', 'сыр', 'топор', 'ворон', 'гитара',
+    'ромашка', 'корона', 'барабан', 'корова', 'морковь', 'финиш'
   ];
 
   function startGame() {
@@ -1183,7 +1101,6 @@
     pathLine.setAttribute('d', `M ${pathPoints.join(' L ')}`);
   }
 
-  // Улучшенное позиционирование кота — корректно работает в любой ориентации
   function positionCat(cellNum) {
     const cat = document.getElementById('cat');
     const cellWrapper = document.getElementById(`cell-wrapper-${cellNum}`);
@@ -1192,34 +1109,10 @@
     
     const cellRect = cellWrapper.getBoundingClientRect();
     const cellSize = cellRect.width;
+    const catSize = cellSize * 0.8;
     
-    // Определяем ориентацию экрана
-    const isLandscape = window.innerWidth > window.innerHeight;
-    const isMobile = window.innerWidth <= 768;
-    
-    // Размер кота зависит от ориентации
-    let catSize;
-    if (isLandscape && isMobile) {
-      // В landscape на мобильных кот = 70% клетки
-      catSize = cellSize * 0.7;
-    } else {
-      // В остальных случаях кот = 80% клетки
-      catSize = cellSize * 0.8;
-    }
-    
-    // Центрируем кота по горизонтали
     const centerX = cellRect.left + (cellSize - catSize) / 2;
-    
-    // В landscape на мобильных кот позиционируется по верхнему краю клетки
-    // С небольшим смещением вверх, чтобы "стоял" на картинке
-    let topY;
-    if (isLandscape && isMobile) {
-      // В landscape кот стоит на верхнем крае клетки
-      topY = cellRect.top - catSize * 0.2 + window.scrollY;
-    } else {
-      // В портрете кот тоже по верхнему краю
-      topY = cellRect.top - catSize * 0.25 + window.scrollY;
-    }
+    const topY = cellRect.top - catSize * 0.25 + window.scrollY;
     
     cat.style.width = catSize + 'px';
     cat.style.height = catSize + 'px';
@@ -1350,14 +1243,6 @@
 
   window.addEventListener('scroll', () => {
     positionCat(currentCell);
-  });
-
-  // Обработка смены ориентации
-  window.addEventListener('orientationchange', () => {
-    setTimeout(() => {
-      createBoard();
-      positionCat(currentCell);
-    }, 300);
   });
 
   window.addEventListener('keydown', (e) => {
