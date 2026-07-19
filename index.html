@@ -223,7 +223,7 @@
     position: relative;
     width: 100%;
     height: 0;
-    padding-bottom: 100%; /* 1000/1000 = 100% для квадратного поля 4×4 */
+    padding-bottom: 100%;
     max-height: 1000px;
   }
 
@@ -354,10 +354,10 @@
 
   /* Кот — меньше клетки, чтобы не закрывать картинку */
   .cat {
-    position: absolute;
+    position: fixed;
     width: 130px;
     height: 130px;
-    z-index: 10;
+    z-index: 50;
     transition: all 0.7s cubic-bezier(0.68, -0.55, 0.265, 1.55);
     filter: drop-shadow(0 8px 16px rgba(0,0,0,0.5));
     pointer-events: none;
@@ -600,7 +600,6 @@
 
   /* ==================== АДАПТИВНАЯ ВЕРСИЯ ==================== */
   
-  /* Планшеты */
   @media screen and (max-width: 1024px) {
     .start-popup {
       padding: 30px;
@@ -667,7 +666,6 @@
     }
   }
   
-  /* Мобильные портрет */
   @media screen and (max-width: 768px) {
     .game-container {
       padding: 10px 10px 90px 10px;
@@ -727,7 +725,6 @@
       height: 75px;
     }
     
-    /* Кубик внизу справа на мобильных */
     .dice-container {
       width: 60px;
       height: 60px;
@@ -763,7 +760,6 @@
     }
   }
   
-  /* Маленькие мобильные */
   @media screen and (max-width: 480px) {
     .game-container {
       padding: 5px 5px 80px 5px;
@@ -837,7 +833,6 @@
     }
   }
   
-  /* Мобильные альбомная ориентация */
   @media screen and (max-height: 500px) and (orientation: landscape) {
     .game-container {
       padding: 10px 10px 10px 10px;
@@ -891,7 +886,6 @@
       height: 70px;
     }
     
-    /* Кубик вверху справа в landscape */
     .dice-container {
       width: 55px;
       height: 55px;
@@ -978,7 +972,7 @@
 
   <!-- Сообщение о победе -->
   <div class="win-message" id="winMessage">
-    <h1>🎉 ПОБЕДА! 🎉</h1>
+    <h1> ПОБЕДА! 🎉</h1>
     <p>Кот добрался до финиша!</p>
     <button onclick="resetGame()">Играть снова</button>
   </div>
@@ -993,6 +987,7 @@
   let isMoving = false;
   let currentDiceValue = 0;
   let gameStarted = false;
+  let cellPositions = []; // Храним позиции всех клеток
 
   const soundJump = document.getElementById('soundJump');
   const soundDiceRoll = document.getElementById('soundDiceRoll');
@@ -1061,9 +1056,11 @@
     boardInner.appendChild(svg);
     
     const pathPoints = [];
+    cellPositions = []; // Очищаем массив позиций
 
     for (let i = 1; i <= TOTAL_CELLS; i++) {
       const pos = getCellPosition(i);
+      cellPositions.push(pos); // Сохраняем позицию
       
       const wrapper = document.createElement('div');
       wrapper.className = 'cell-wrapper';
@@ -1107,20 +1104,26 @@
   }
 
   function positionCat(cellNum) {
-    const pos = getCellPosition(cellNum);
     const cat = document.getElementById('cat');
-    const boardInner = document.getElementById('boardInner');
-    const boardRect = boardInner.getBoundingClientRect();
+    const cellWrapper = document.getElementById(`cell-wrapper-${cellNum}`);
     
-    // Кот позиционируется по центру клетки
-    const catSize = pos.size * 0.65; // Кот = 65% от размера клетки
-    const offsetX = (pos.size - catSize) / 2;
-    const offsetY = (pos.size - catSize) / 2;
+    if (!cellWrapper) return;
+    
+    // Получаем позицию клетки относительно viewport
+    const cellRect = cellWrapper.getBoundingClientRect();
+    const cellSize = cellRect.width;
+    
+    // Размер кота = 65% от размера клетки
+    const catSize = cellSize * 0.65;
+    
+    // Центрируем кота в клетке
+    const centerX = cellRect.left + (cellSize - catSize) / 2;
+    const centerY = cellRect.top + (cellSize - catSize) / 2 + window.scrollY;
     
     cat.style.width = catSize + 'px';
     cat.style.height = catSize + 'px';
-    cat.style.left = (boardRect.left + pos.x + offsetX) + 'px';
-    cat.style.top = (boardRect.top + pos.y + offsetY + window.scrollY) + 'px';
+    cat.style.left = centerX + 'px';
+    cat.style.top = centerY + 'px';
   }
 
   function getRotationForFace(faceNumber) {
@@ -1232,12 +1235,17 @@
 
   window.addEventListener('load', () => {
     createBoard();
-    setTimeout(() => positionCat(1), 100);
+    // Ждем немного чтобы DOM полностью отрисовался
+    setTimeout(() => {
+      positionCat(1);
+    }, 200);
   });
 
   window.addEventListener('resize', () => {
     createBoard();
-    setTimeout(() => positionCat(currentCell), 100);
+    setTimeout(() => {
+      positionCat(currentCell);
+    }, 100);
   });
 
   window.addEventListener('scroll', () => {
