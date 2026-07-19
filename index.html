@@ -609,11 +609,6 @@
       font-size: 18px;
       padding: 4px 12px;
     }
-    
-    .cat {
-      width: 150px;
-      height: 150px;
-    }
   }
 
   @media screen and (max-width: 1024px) {
@@ -653,11 +648,6 @@
     .cell-number {
       font-size: 16px;
       padding: 3px 10px;
-    }
-    
-    .cat {
-      width: 120px;
-      height: 120px;
     }
     
     .dice-container {
@@ -734,11 +724,6 @@
     .cell-number {
       font-size: 14px;
       padding: 2px 8px;
-    }
-    
-    .cat {
-      width: 85px;
-      height: 85px;
     }
     
     .dice-container {
@@ -828,11 +813,6 @@
       padding: 2px 6px;
     }
     
-    .cat {
-      width: 60px;
-      height: 60px;
-    }
-    
     .dice-container {
       width: 50px;
       height: 50px;
@@ -900,11 +880,6 @@
     
     .cell-number {
       font-size: 13px;
-    }
-    
-    .cat {
-      width: 75px;
-      height: 75px;
     }
     
     .dice-container {
@@ -986,7 +961,7 @@
   <div class="roll-hint">Кликни<br>бросить</div>
 
   <div class="win-message" id="winMessage">
-    <h1> ПОБЕДА! 🎉</h1>
+    <h1>🎉 ПОБЕДА! 🎉</h1>
     <p>Кот добрался до финиша!</p>
     <button onclick="resetGame()">Играть снова</button>
   </div>
@@ -1101,18 +1076,30 @@
     pathLine.setAttribute('d', `M ${pathPoints.join(' L ')}`);
   }
 
+  // Улучшенное позиционирование кота
   function positionCat(cellNum) {
     const cat = document.getElementById('cat');
-    const cellWrapper = document.getElementById(`cell-wrapper-${cellNum}`);
+    const cell = document.getElementById(`cell-${cellNum}`);
     
-    if (!cellWrapper) return;
+    if (!cell) return;
     
-    const cellRect = cellWrapper.getBoundingClientRect();
-    const cellSize = cellRect.width;
-    const catSize = cellSize * 0.8;
+    // Получаем реальные размеры клетки
+    const cellRect = cell.getBoundingClientRect();
+    const cellWidth = cellRect.width;
+    const cellHeight = cellRect.height;
     
-    const centerX = cellRect.left + (cellSize - catSize) / 2;
-    const topY = cellRect.top - catSize * 0.25 + window.scrollY;
+    // Определяем размер кота пропорционально клетке
+    // На мобильных кот чуть меньше (70%), на десктопе больше (75%)
+    const isMobile = window.innerWidth <= 768;
+    const catRatio = isMobile ? 0.70 : 0.75;
+    const catSize = Math.min(cellWidth, cellHeight) * catRatio;
+    
+    // Центрируем кота по горизонтали относительно клетки
+    const centerX = cellRect.left + (cellWidth - catSize) / 2;
+    
+    // Позиционируем кота по верхнему краю клетки
+    // Кот "стоит" на верхнем крае картинки
+    const topY = cellRect.top - catSize * 0.15 + window.scrollY;
     
     cat.style.width = catSize + 'px';
     cat.style.height = catSize + 'px';
