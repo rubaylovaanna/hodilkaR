@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>🐱 Кот-ходилка с 3D кубиком</title>
+<title> Кот-ходилка с 3D кубиком</title>
 <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
 <style>
   * { 
@@ -214,15 +214,15 @@
     width: 100%;
     max-width: 1500px;
     margin: 0 auto;
-    padding-top: 20px;
+    padding-top: 100px;
   }
 
   .board {
     position: relative;
     width: 100%;
     height: 0;
-    padding-bottom: 60%;
-    max-height: 900px;
+    padding-bottom: 75%;
+    max-height: 800px;
   }
 
   .board-inner {
@@ -233,7 +233,7 @@
     height: 100%;
   }
 
-  .cell-wrapper {
+  .domino-wrapper {
     position: absolute;
     display: flex;
     flex-direction: column;
@@ -241,86 +241,90 @@
     z-index: 5;
   }
 
-  .cell {
-    width: 220px;
-    height: 220px;
-    background: linear-gradient(135deg, #ffffff 0%, #f0f0f0 100%);
-    border: 6px solid #fff;
-    border-radius: 30px;
-    overflow: hidden;
-    box-shadow: 0 12px 35px rgba(0,0,0,0.3);
-    transition: all 0.3s;
+  .cell-top {
+    width: 100px;
+    height: 50px;
+    background: transparent;
+    border: 4px solid rgba(255, 255, 255, 0.6);
+    border-bottom: none;
+    border-radius: 20px 20px 0 0;
+    box-shadow: none;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 15px;
+    padding: 4px 8px;
+  }
+
+  .cell-top .cell-name {
+    color: white;
+    font-size: 13px;
+    font-weight: 800;
+    text-align: center;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.5);
     font-family: 'Nunito', sans-serif;
+    line-height: 1.1;
+    word-wrap: break-word;
+    max-width: 100%;
   }
 
-  .cell:hover {
-    transform: scale(1.05);
-    box-shadow: 0 18px 45px rgba(0,0,0,0.4);
+  .cell-bottom {
+    width: 100px;
+    height: 100px;
+    background: linear-gradient(135deg, #ffffff 0%, #f8f8f8 100%);
+    border: 4px solid #fff;
+    border-radius: 0 0 20px 20px;
+    overflow: hidden;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    font-family: 'Nunito', sans-serif;
+    position: relative;
   }
 
-  .cell.start {
-    border-color: #4CAF50;
-    box-shadow: 0 0 30px rgba(76,175,80,0.6);
-    animation: glow 2s infinite;
-  }
-
-  .cell.finish {
-    border-color: #FFD700;
-    box-shadow: 0 0 30px rgba(255,215,0,0.6);
-    animation: pulse 1.5s infinite;
-  }
-
-  .cell img.cell-image {
+  .cell-bottom img.cell-image {
     width: 85%;
     height: 85%;
     object-fit: contain;
-    border-radius: 12px;
+    border-radius: 10px;
   }
 
-  .cell-number {
-    position: absolute;
-    top: 10px;
-    left: 10px;
-    background: rgba(255,255,255,0.95);
-    padding: 5px 14px;
-    border-radius: 14px;
-    font-size: 20px;
-    font-weight: 900;
-    color: #333;
-    z-index: 2;
-    font-family: 'Nunito', sans-serif;
+  .domino-wrapper.start .cell-top {
+    border-color: rgba(76, 175, 80, 0.8);
+    box-shadow: 0 -4px 20px rgba(76,175,80,0.3);
   }
 
-  .cell-label {
-    margin-top: 15px;
-    color: white;
-    font-size: 18px;
-    font-weight: 800;
-    text-align: center;
-    text-shadow: 0 2px 6px rgba(0,0,0,0.6);
-    font-family: 'Nunito', sans-serif;
-    max-width: 220px;
-    word-wrap: break-word;
-    line-height: 1.2;
+  .domino-wrapper.start .cell-bottom {
+    border-color: #4CAF50;
+    box-shadow: 0 8px 25px rgba(76,175,80,0.4);
+    animation: glow 2s infinite;
+  }
+
+  .domino-wrapper.finish .cell-top {
+    border-color: rgba(255, 215, 0, 0.8);
+    box-shadow: 0 -4px 20px rgba(255,215,0,0.3);
+  }
+
+  .domino-wrapper.finish .cell-bottom {
+    border-color: #FFD700;
+    box-shadow: 0 8px 25px rgba(255,215,0,0.4);
+    animation: pulse 1.5s infinite;
   }
 
   @keyframes glow {
-    0%, 100% { box-shadow: 0 0 30px rgba(76,175,80,0.6); }
-    50% { box-shadow: 0 0 60px rgba(76,175,80,0.9); }
+    0%, 100% { box-shadow: 0 0 20px rgba(76,175,80,0.5); }
+    50% { box-shadow: 0 0 40px rgba(76,175,80,0.8); }
   }
 
   @keyframes pulse {
     0%, 100% { 
       transform: scale(1); 
-      box-shadow: 0 0 30px rgba(255,215,0,0.6); 
+      box-shadow: 0 0 20px rgba(255,215,0,0.5); 
     }
     50% { 
-      transform: scale(1.05); 
-      box-shadow: 0 0 60px rgba(255,215,0,0.9); 
+      transform: scale(1.03); 
+      box-shadow: 0 0 40px rgba(255,215,0,0.8); 
     }
   }
 
@@ -337,7 +341,7 @@
   .path-line {
     fill: none;
     stroke: rgba(255,255,255,0.7);
-    stroke-width: 12;
+    stroke-width: 10;
     stroke-linecap: round;
     stroke-dasharray: 20, 12;
     animation: dash 20s linear infinite;
@@ -351,8 +355,8 @@
 
   .cat {
     position: fixed;
-    width: 180px;
-    height: 180px;
+    width: 140px;
+    height: 140px;
     z-index: 50;
     transition: all 0.7s cubic-bezier(0.68, -0.55, 0.265, 1.55);
     filter: drop-shadow(0 10px 20px rgba(0,0,0,0.5));
@@ -433,15 +437,8 @@
     box-shadow: 0 2px 6px rgba(0,0,0,0.3);
   }
 
-  .face-1 { 
-    display: flex; 
-    align-items: center; 
-    justify-content: center; 
-  }
-  .face-1 .dot { 
-    width: 22px; 
-    height: 22px; 
-  }
+  .face-1 { display: flex; align-items: center; justify-content: center; }
+  .face-1 .dot { width: 22px; height: 22px; }
 
   .face-2 { grid-template: 1fr 1fr / 1fr; gap: 8px; }
   .face-2 .dot:nth-child(1) { justify-self: end; align-self: start; }
@@ -593,313 +590,128 @@
     }
   }
 
+  /* Дисклеймер для мобильной версии */
+  .mobile-disclaimer {
+    display: none;
+    text-align: center;
+    padding: 20px;
+    margin-top: 20px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    backdrop-filter: blur(10px);
+  }
+
+  .mobile-disclaimer p {
+    color: white;
+    font-size: 16px;
+    font-weight: 700;
+    font-family: 'Nunito', sans-serif;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+  }
+
+  .mobile-disclaimer .icon {
+    font-size: 40px;
+    margin-bottom: 10px;
+  }
+
   @media screen and (max-width: 1200px) {
-    .cell {
-      width: 180px;
-      height: 180px;
-      padding: 12px;
-    }
-    
-    .cell-label {
-      font-size: 16px;
-      max-width: 180px;
-    }
-    
-    .cell-number {
-      font-size: 18px;
-      padding: 4px 12px;
-    }
+    .cell-top { width: 90px; height: 45px; }
+    .cell-bottom { width: 90px; height: 90px; }
+    .cell-top .cell-name { font-size: 12px; }
   }
 
   @media screen and (max-width: 1024px) {
-    .start-popup {
-      padding: 30px;
-    }
+    .start-popup { padding: 30px; }
+    .popup-cat-image { width: 120px; height: 120px; }
+    .popup-title { font-size: 26px; }
+    .popup-rules p { font-size: 14px; }
+    .start-button { font-size: 24px; padding: 18px; }
     
-    .popup-cat-image {
-      width: 120px;
-      height: 120px;
-    }
+    .cell-top { width: 80px; height: 40px; border-width: 3px; border-radius: 15px 15px 0 0; padding: 3px 6px; }
+    .cell-bottom { width: 80px; height: 80px; border-width: 3px; border-radius: 0 0 15px 15px; padding: 8px; }
+    .cell-top .cell-name { font-size: 11px; }
     
-    .popup-title {
-      font-size: 26px;
-    }
-    
-    .popup-rules p {
-      font-size: 14px;
-    }
-    
-    .start-button {
-      font-size: 24px;
-      padding: 18px;
-    }
-    
-    .cell {
-      width: 150px;
-      height: 150px;
-      padding: 10px;
-    }
-    
-    .cell-label {
-      font-size: 14px;
-      max-width: 150px;
-    }
-    
-    .cell-number {
-      font-size: 16px;
-      padding: 3px 10px;
-    }
-    
-    .dice-container {
-      width: 70px;
-      height: 70px;
-      top: 15px;
-      right: 15px;
-    }
-    
-    .dice-value {
-      top: 95px;
-      right: 30px;
-      width: 35px;
-      height: 35px;
-      font-size: 18px;
-    }
-    
-    .roll-hint {
-      top: 140px;
-      font-size: 11px;
-      width: 55px;
-    }
+    .dice-container { width: 70px; height: 70px; top: 15px; right: 15px; }
+    .dice-value { top: 95px; right: 30px; width: 35px; height: 35px; font-size: 18px; }
+    .roll-hint { top: 140px; font-size: 11px; width: 55px; }
   }
   
   @media screen and (max-width: 768px) {
-    .game-container {
-      padding: 10px 10px 100px 10px;
-    }
+    .game-container { padding: 10px 10px 100px 10px; }
+    .board-wrapper { padding-top: 80px; }
+    .start-popup { padding: 25px; }
+    .popup-cat-image { width: 100px; height: 100px; }
+    .popup-title { font-size: 22px; margin-bottom: 20px; }
+    .popup-rules { padding: 20px; }
+    .popup-rules h3 { font-size: 18px; }
+    .popup-rules p { font-size: 13px; }
+    .start-button { font-size: 20px; padding: 15px; }
     
-    .start-popup {
-      padding: 25px;
-    }
+    .cell-top { width: 60px; height: 30px; border-width: 2px; border-radius: 12px 12px 0 0; padding: 2px 4px; }
+    .cell-bottom { width: 60px; height: 60px; border-width: 2px; border-radius: 0 0 12px 12px; padding: 6px; }
+    .cell-top .cell-name { font-size: 9px; }
     
-    .popup-cat-image {
-      width: 100px;
-      height: 100px;
-    }
+    .dice-container { width: 60px; height: 60px; top: auto; bottom: 20px; right: 15px; }
+    .dice-value { top: auto; bottom: 90px; right: 25px; width: 30px; height: 30px; font-size: 16px; }
+    .roll-hint { display: none; }
     
-    .popup-title {
-      font-size: 22px;
-      margin-bottom: 20px;
-    }
+    .win-message h1 { font-size: 48px; }
+    .win-message p { font-size: 22px; }
+    .win-message button { padding: 15px 40px; font-size: 20px; }
     
-    .popup-rules {
-      padding: 20px;
-    }
-    
-    .popup-rules h3 {
-      font-size: 18px;
-    }
-    
-    .popup-rules p {
-      font-size: 13px;
-    }
-    
-    .start-button {
-      font-size: 20px;
-      padding: 15px;
-    }
-    
-    .cell {
-      width: 110px;
-      height: 110px;
-      border-radius: 20px;
-      border-width: 4px;
-      padding: 8px;
-    }
-    
-    .cell-label {
-      font-size: 12px;
-      max-width: 110px;
-    }
-    
-    .cell-number {
-      font-size: 14px;
-      padding: 2px 8px;
-    }
-    
-    .dice-container {
-      width: 60px;
-      height: 60px;
-      top: auto;
-      bottom: 20px;
-      right: 15px;
-    }
-    
-    .dice-value {
-      top: auto;
-      bottom: 90px;
-      right: 25px;
-      width: 30px;
-      height: 30px;
-      font-size: 16px;
-    }
-    
-    .roll-hint {
-      display: none;
-    }
-    
-    .win-message h1 {
-      font-size: 48px;
-    }
-    
-    .win-message p {
-      font-size: 22px;
-    }
-    
-    .win-message button {
-      padding: 15px 40px;
-      font-size: 20px;
+    /* Показываем дисклеймер на мобильных */
+    .mobile-disclaimer {
+      display: block;
     }
   }
   
   @media screen and (max-width: 480px) {
-    .game-container {
-      padding: 5px 5px 90px 5px;
-    }
+    .game-container { padding: 5px 5px 90px 5px; }
+    .board-wrapper { padding-top: 70px; }
+    .start-popup { padding: 20px; }
+    .popup-cat-image { width: 80px; height: 80px; }
+    .popup-title { font-size: 20px; }
+    .popup-rules { padding: 15px; }
+    .popup-rules h3 { font-size: 16px; }
+    .popup-rules p { font-size: 12px; }
+    .start-button { font-size: 18px; padding: 12px; }
     
-    .start-popup {
-      padding: 20px;
-    }
+    .cell-top { width: 48px; height: 24px; border-radius: 10px 10px 0 0; padding: 2px 3px; }
+    .cell-bottom { width: 48px; height: 48px; border-radius: 0 0 10px 10px; padding: 5px; }
+    .cell-top .cell-name { font-size: 7px; }
     
-    .popup-cat-image {
-      width: 80px;
-      height: 80px;
-    }
+    .dice-container { width: 50px; height: 50px; bottom: 15px; right: 10px; }
+    .dice-value { bottom: 75px; right: 18px; width: 25px; height: 25px; font-size: 14px; }
     
-    .popup-title {
-      font-size: 20px;
-    }
-    
-    .popup-rules {
-      padding: 15px;
-    }
-    
-    .popup-rules h3 {
-      font-size: 16px;
-    }
-    
-    .popup-rules p {
-      font-size: 12px;
-    }
-    
-    .start-button {
-      font-size: 18px;
-      padding: 12px;
-    }
-    
-    .cell {
-      width: 80px;
-      height: 80px;
-      border-radius: 16px;
-      padding: 6px;
-    }
-    
-    .cell-label {
-      font-size: 10px;
-      max-width: 80px;
-    }
-    
-    .cell-number {
-      font-size: 12px;
-      padding: 2px 6px;
-    }
-    
-    .dice-container {
-      width: 50px;
-      height: 50px;
-      bottom: 15px;
-      right: 10px;
-    }
-    
-    .dice-value {
-      bottom: 75px;
-      right: 18px;
-      width: 25px;
-      height: 25px;
+    .mobile-disclaimer p {
       font-size: 14px;
+    }
+    
+    .mobile-disclaimer .icon {
+      font-size: 35px;
     }
   }
   
   @media screen and (max-height: 500px) and (orientation: landscape) {
-    .game-container {
-      padding: 10px 10px 10px 10px;
-    }
+    .game-container { padding: 10px; }
+    .board-wrapper { max-width: 100%; padding-top: 60px; }
+    .board { padding-bottom: 60%; }
+    .start-popup { padding: 20px; }
+    .popup-cat-image { width: 80px; height: 80px; }
+    .popup-title { font-size: 20px; margin-bottom: 15px; }
+    .popup-rules { padding: 15px; margin-bottom: 20px; }
+    .start-button { font-size: 18px; padding: 12px; }
     
-    .board-wrapper {
-      max-width: 100%;
-    }
+    .cell-top { width: 55px; height: 28px; }
+    .cell-bottom { width: 55px; height: 55px; }
+    .cell-top .cell-name { font-size: 8px; }
     
-    .board {
-      padding-bottom: 50%;
-    }
+    .dice-container { width: 55px; height: 55px; top: 10px; right: 10px; bottom: auto; }
+    .dice-value { top: 75px; right: 18px; bottom: auto; width: 28px; height: 28px; font-size: 14px; }
+    .roll-hint { display: none; }
     
-    .start-popup {
-      padding: 20px;
-    }
-    
-    .popup-cat-image {
-      width: 80px;
-      height: 80px;
-    }
-    
-    .popup-title {
-      font-size: 20px;
-      margin-bottom: 15px;
-    }
-    
-    .popup-rules {
-      padding: 15px;
-      margin-bottom: 20px;
-    }
-    
-    .start-button {
-      font-size: 18px;
-      padding: 12px;
-    }
-    
-    .cell {
-      width: 100px;
-      height: 100px;
-      padding: 8px;
-    }
-    
-    .cell-label {
-      font-size: 11px;
-      max-width: 100px;
-      margin-top: 8px;
-    }
-    
-    .cell-number {
-      font-size: 13px;
-    }
-    
-    .dice-container {
-      width: 55px;
-      height: 55px;
-      top: 10px;
-      right: 10px;
-      bottom: auto;
-    }
-    
-    .dice-value {
-      top: 75px;
-      right: 18px;
-      bottom: auto;
-      width: 28px;
-      height: 28px;
-      font-size: 14px;
-    }
-    
-    .roll-hint {
+    /* Скрываем дисклеймер в ландшафте */
+    .mobile-disclaimer {
       display: none;
     }
   }
@@ -920,13 +732,13 @@
     <h2 class="popup-title">🎲 <span>Кот-ходилка</span> 🎲</h2>
     
     <div class="popup-rules">
-      <h3>📋 Правила игры:</h3>
+      <h3>Правила игры:</h3>
       <p>Привет, друг! Помоги коту манулу добежать до финиша!</p>
-      <p>Бросай кубик, делай ходы и <strong>называй слово</strong>, на которое он прыгнет! <strong>Четко произноси звук!</strong></p>
-      <em>💡 Для усложнения, можете придумать предложение с этим словом.</em>
+      <p>Бросай кубик, делай ход и <strong>называй слово</strong>, на которое он прыгнет! <strong>Четко произноси звук!</strong></p>
+      <em>💡Для усложнения, можете придумать предложение с этим словом.</em>
     </div>
     
-    <button class="start-button" onclick="startGame()">🎮 СТАРТ</button>
+    <button class="start-button" onclick="startGame()">СТАРТ</button>
   </div>
 </div>
 
@@ -939,6 +751,12 @@
         </svg>
       </div>
     </div>
+  </div>
+
+  <!-- Дисклеймер для мобильной версии -->
+  <div class="mobile-disclaimer" id="mobileDisclaimer">
+    <div class="icon">📱</div>
+    <p>Для корректной работы переверните экран</p>
   </div>
 
   <div class="cat" id="cat">
@@ -958,7 +776,7 @@
   
   <div class="dice-value" id="diceValue"></div>
   
-  <div class="roll-hint">Кликни<br>бросить</div>
+  <div class="roll-hint">Кликни, чтобы<br>бросить кубик</div>
 
   <div class="win-message" id="winMessage">
     <h1>🎉 ПОБЕДА! 🎉</h1>
@@ -968,14 +786,18 @@
 </div>
 
 <script>
-  const TOTAL_CELLS = 18;
+  const isMobile = window.innerWidth <= 768;
+  const TOTAL_CELLS = isMobile ? 18 : 24;
   const COLS = 6;
-  const ROWS = 3;
+  const ROWS = isMobile ? 3 : 4;
+  
   let currentCell = 1;
   let isRolling = false;
   let isMoving = false;
   let currentDiceValue = 0;
   let gameStarted = false;
+  
+  let cellPositions = [];
 
   const soundJump = document.getElementById('soundJump');
   const soundDiceRoll = document.getElementById('soundDiceRoll');
@@ -988,11 +810,27 @@
     }
   }
 
-  const cellLabels = [
+  const cellLabels24 = [
+    'старт', 'рак', 'ракета', 'радуга', 'роза', 'нора',
+    'рыба', 'комар', 'сыр', 'топор', 'ворон', 'гитара',
+    'ромашка', 'корона', 'барабан', 'корова', 'морковь', 'паровоз',
+    'храм', 'торт', 'червяк', 'круг', 'гора', 'финиш'
+  ];
+
+  const cellLabels18 = [
     'старт', 'рак', 'ракета', 'радуга', 'роза', 'нора',
     'рыба', 'комар', 'сыр', 'топор', 'ворон', 'гитара',
     'ромашка', 'корона', 'барабан', 'корова', 'морковь', 'финиш'
   ];
+
+  const cellLabels = isMobile ? cellLabels18 : cellLabels24;
+
+  function getCellImage(cellNum) {
+    if (isMobile && cellNum === TOTAL_CELLS) {
+      return 'assets/cells/cell-24.png';
+    }
+    return `assets/cells/cell-${String(cellNum).padStart(2, '0')}.png`;
+  }
 
   function startGame() {
     gameStarted = true;
@@ -1004,23 +842,28 @@
     const boardWidth = boardInner.offsetWidth;
     const boardHeight = boardInner.offsetHeight;
     
-    const cellSize = Math.min(boardWidth / COLS, boardHeight / ROWS) * 0.82;
-    const paddingX = boardWidth * 0.05;
+    const squareSize = Math.min(boardWidth / COLS, boardHeight / (ROWS * 1.5)) * 0.65;
+    const topSquareHeight = squareSize / 2;
+    const dominoHeight = squareSize + topSquareHeight;
+    
+    const paddingX = boardWidth * 0.08;
     const paddingY = boardHeight * 0.12;
     
     const row = Math.floor((cellNum - 1) / COLS);
     const colInRow = (cellNum - 1) % COLS;
     const col = row % 2 === 0 ? colInRow : (COLS - 1 - colInRow);
     
-    const x = paddingX + col * ((boardWidth - 2 * paddingX) / (COLS - 1)) - cellSize / 2;
-    const y = paddingY + row * ((boardHeight - 2 * paddingY) / (ROWS - 1)) - cellSize / 2;
+    const x = paddingX + col * ((boardWidth - 2 * paddingX) / (COLS - 1)) - squareSize / 2;
+    const y = paddingY + row * ((boardHeight - 2 * paddingY - dominoHeight) / (ROWS - 1)) - dominoHeight / 2;
     
     return { 
       x, 
       y, 
-      centerX: x + cellSize / 2, 
-      centerY: y + cellSize / 2,
-      size: cellSize
+      centerX: x + squareSize / 2, 
+      centerY: y + dominoHeight / 2,
+      squareSize: squareSize,
+      topSquareHeight: topSquareHeight,
+      dominoHeight: dominoHeight
     };
   }
 
@@ -1031,44 +874,46 @@
     boardInner.appendChild(svg);
     
     const pathPoints = [];
+    cellPositions = [];
 
     for (let i = 1; i <= TOTAL_CELLS; i++) {
       const pos = getCellPosition(i);
+      cellPositions.push(pos);
       
-      const wrapper = document.createElement('div');
-      wrapper.className = 'cell-wrapper';
-      wrapper.id = `cell-wrapper-${i}`;
-      wrapper.style.left = pos.x + 'px';
-      wrapper.style.top = pos.y + 'px';
+      const domino = document.createElement('div');
+      domino.className = 'domino-wrapper';
+      domino.id = `domino-${i}`;
+      domino.style.left = pos.x + 'px';
+      domino.style.top = pos.y + 'px';
       
-      const cell = document.createElement('div');
-      cell.className = 'cell';
-      cell.id = `cell-${i}`;
-      cell.style.width = pos.size + 'px';
-      cell.style.height = pos.size + 'px';
+      const cellTop = document.createElement('div');
+      cellTop.className = 'cell-top';
+      cellTop.style.width = pos.squareSize + 'px';
+      cellTop.style.height = pos.topSquareHeight + 'px';
+      
+      const cellName = document.createElement('div');
+      cellName.className = 'cell-name';
+      cellName.textContent = cellLabels[i - 1];
+      cellTop.appendChild(cellName);
+      
+      const cellBottom = document.createElement('div');
+      cellBottom.className = 'cell-bottom';
+      cellBottom.style.width = pos.squareSize + 'px';
+      cellBottom.style.height = pos.squareSize + 'px';
 
       const img = document.createElement('img');
       img.className = 'cell-image';
-      img.src = `assets/cells/cell-${String(i).padStart(2, '0')}.png`;
+      img.src = getCellImage(i);
       img.alt = cellLabels[i - 1];
-      cell.appendChild(img);
-      
-      const num = document.createElement('div');
-      num.className = 'cell-number';
-      num.textContent = i;
-      cell.appendChild(num);
+      cellBottom.appendChild(img);
 
-      if (i === 1) cell.classList.add('start');
-      if (i === TOTAL_CELLS) cell.classList.add('finish');
+      domino.appendChild(cellTop);
+      domino.appendChild(cellBottom);
 
-      wrapper.appendChild(cell);
-      
-      const label = document.createElement('div');
-      label.className = 'cell-label';
-      label.textContent = cellLabels[i - 1];
-      wrapper.appendChild(label);
+      if (i === 1) domino.classList.add('start');
+      if (i === TOTAL_CELLS) domino.classList.add('finish');
 
-      boardInner.appendChild(wrapper);
+      boardInner.appendChild(domino);
       pathPoints.push(`${pos.centerX},${pos.centerY}`);
     }
 
@@ -1076,35 +921,29 @@
     pathLine.setAttribute('d', `M ${pathPoints.join(' L ')}`);
   }
 
-  // Улучшенное позиционирование кота
   function positionCat(cellNum) {
     const cat = document.getElementById('cat');
-    const cell = document.getElementById(`cell-${cellNum}`);
+    const pos = cellPositions[cellNum - 1];
+    const boardInner = document.getElementById('boardInner');
     
-    if (!cell) return;
+    if (!pos || !boardInner) return;
     
-    // Получаем реальные размеры клетки
-    const cellRect = cell.getBoundingClientRect();
-    const cellWidth = cellRect.width;
-    const cellHeight = cellRect.height;
+    const boardRect = boardInner.getBoundingClientRect();
     
-    // Определяем размер кота пропорционально клетке
-    // На мобильных кот чуть меньше (70%), на десктопе больше (75%)
-    const isMobile = window.innerWidth <= 768;
-    const catRatio = isMobile ? 0.70 : 0.75;
-    const catSize = Math.min(cellWidth, cellHeight) * catRatio;
+    const isMobileNow = window.innerWidth <= 768;
+    const catSize = isMobileNow ? 110 : 140;
     
-    // Центрируем кота по горизонтали относительно клетки
-    const centerX = cellRect.left + (cellWidth - catSize) / 2;
+    const catCenterX = pos.x + pos.squareSize / 2;
+    const catLeft = catCenterX - catSize / 2;
+    const catTop = pos.y + pos.topSquareHeight - catSize;
     
-    // Позиционируем кота по верхнему краю клетки
-    // Кот "стоит" на верхнем крае картинки
-    const topY = cellRect.top - catSize * 0.15 + window.scrollY;
+    const screenLeft = boardRect.left + catLeft;
+    const screenTop = boardRect.top + catTop;
     
     cat.style.width = catSize + 'px';
     cat.style.height = catSize + 'px';
-    cat.style.left = centerX + 'px';
-    cat.style.top = topY + 'px';
+    cat.style.left = screenLeft + 'px';
+    cat.style.top = screenTop + 'px';
   }
 
   function getRotationForFace(faceNumber) {
@@ -1221,16 +1060,31 @@
     }, 200);
   });
 
+  let resizeTimer;
   window.addEventListener('resize', () => {
-    createBoard();
-    setTimeout(() => {
-      positionCat(currentCell);
-    }, 100);
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(() => {
+      const newIsMobile = window.innerWidth <= 768;
+      const newTotalCells = newIsMobile ? 18 : 24;
+      
+      if (newTotalCells !== TOTAL_CELLS) {
+        location.reload();
+      } else {
+        createBoard();
+        setTimeout(() => {
+          positionCat(currentCell);
+        }, 100);
+      }
+    }, 300);
   });
 
+  let scrollTimer;
   window.addEventListener('scroll', () => {
-    positionCat(currentCell);
-  });
+    if (scrollTimer) cancelAnimationFrame(scrollTimer);
+    scrollTimer = requestAnimationFrame(() => {
+      positionCat(currentCell);
+    });
+  }, { passive: true });
 
   window.addEventListener('keydown', (e) => {
     if (e.code === 'Space') {
