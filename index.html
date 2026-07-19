@@ -223,7 +223,7 @@
     position: relative;
     width: 100%;
     height: 0;
-    padding-bottom: 60%; /* ~3:5 соотношение для 3×6 с отступами */
+    padding-bottom: 60%;
     max-height: 900px;
   }
 
@@ -326,7 +326,6 @@
     }
   }
 
-  /* SVG линия пути */
   .path-svg {
     position: absolute;
     top: 0;
@@ -380,14 +379,14 @@
     75% { transform: translateY(-25px) scale(1.1) rotate(8deg); }
   }
 
-  /* 3D КУБИК */
+  /* 3D КУБИК — ПРЕЖНИЙ РАЗМЕР (80px) */
   .dice-container {
     position: fixed;
     top: 20px;
     right: 20px;
-    width: 90px;
-    height: 90px;
-    perspective: 800px;
+    width: 80px;
+    height: 80px;
+    perspective: 700px;
     cursor: pointer;
     z-index: 100;
   }
@@ -410,27 +409,27 @@
 
   .face {
     position: absolute;
-    width: 90px;
-    height: 90px;
+    width: 80px;
+    height: 80px;
     background: linear-gradient(135deg, #ffffff 0%, #e0e0e0 100%);
     border: 4px solid #2c3e50;
-    border-radius: 18px;
+    border-radius: 15px;
     display: grid;
-    padding: 16px;
+    padding: 14px;
     box-shadow: inset 0 0 25px rgba(0,0,0,0.1);
     backface-visibility: hidden;
   }
 
-  .face-1 { transform: rotateY(0deg) translateZ(45px); }
-  .face-6 { transform: rotateY(180deg) translateZ(45px); }
-  .face-3 { transform: rotateY(90deg) translateZ(45px); }
-  .face-4 { transform: rotateY(-90deg) translateZ(45px); }
-  .face-2 { transform: rotateX(90deg) translateZ(45px); }
-  .face-5 { transform: rotateX(-90deg) translateZ(45px); }
+  .face-1 { transform: rotateY(0deg) translateZ(40px); }
+  .face-6 { transform: rotateY(180deg) translateZ(40px); }
+  .face-3 { transform: rotateY(90deg) translateZ(40px); }
+  .face-4 { transform: rotateY(-90deg) translateZ(40px); }
+  .face-2 { transform: rotateX(90deg) translateZ(40px); }
+  .face-5 { transform: rotateX(-90deg) translateZ(40px); }
 
   .dot {
-    width: 16px;
-    height: 16px;
+    width: 14px;
+    height: 14px;
     background: linear-gradient(135deg, #e74c3c, #c0392b);
     border-radius: 50%;
     align-self: center;
@@ -444,38 +443,38 @@
     justify-content: center; 
   }
   .face-1 .dot { 
-    width: 26px; 
-    height: 26px; 
+    width: 22px; 
+    height: 22px; 
   }
 
-  .face-2 { grid-template: 1fr 1fr / 1fr; gap: 10px; }
+  .face-2 { grid-template: 1fr 1fr / 1fr; gap: 8px; }
   .face-2 .dot:nth-child(1) { justify-self: end; align-self: start; }
   .face-2 .dot:nth-child(2) { justify-self: start; align-self: end; }
 
-  .face-3 { grid-template: 1fr 1fr 1fr / 1fr; gap: 8px; }
+  .face-3 { grid-template: 1fr 1fr 1fr / 1fr; gap: 6px; }
   .face-3 .dot:nth-child(1) { justify-self: end; align-self: start; }
   .face-3 .dot:nth-child(2) { justify-self: center; align-self: center; }
   .face-3 .dot:nth-child(3) { justify-self: start; align-self: end; }
 
-  .face-4 { grid-template: 1fr 1fr / 1fr 1fr; gap: 12px; }
+  .face-4 { grid-template: 1fr 1fr / 1fr 1fr; gap: 10px; }
 
-  .face-5 { grid-template: 1fr 1fr 1fr / 1fr 1fr; gap: 10px; }
+  .face-5 { grid-template: 1fr 1fr 1fr / 1fr 1fr; gap: 8px; }
   .face-5 .dot:nth-child(5) { grid-column: 1 / 3; justify-self: center; }
 
-  .face-6 { grid-template: 1fr 1fr 1fr / 1fr 1fr; gap: 11px; }
+  .face-6 { grid-template: 1fr 1fr 1fr / 1fr 1fr; gap: 9px; }
 
   .dice-value {
     position: fixed;
-    top: 125px;
-    right: 40px;
+    top: 110px;
+    right: 35px;
     background: rgba(255,255,255,0.95);
-    width: 45px;
-    height: 45px;
+    width: 40px;
+    height: 40px;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 22px;
+    font-size: 20px;
     font-weight: 900;
     color: #e74c3c;
     box-shadow: 0 4px 15px rgba(0,0,0,0.3);
@@ -494,16 +493,16 @@
 
   .roll-hint {
     position: fixed;
-    top: 180px;
-    right: 30px;
+    top: 160px;
+    right: 25px;
     color: white;
-    font-size: 13px;
+    font-size: 12px;
     font-weight: 700;
     text-align: center;
     opacity: 0.9;
     text-shadow: 0 2px 4px rgba(0,0,0,0.5);
     animation: hintPulse 2s infinite;
-    width: 70px;
+    width: 60px;
     font-family: 'Nunito', sans-serif;
     z-index: 100;
   }
@@ -546,791 +545,3 @@
 
   @keyframes celebrate {
     0%, 100% { transform: scale(1) rotate(0deg); }
-    25% { transform: scale(1.1) rotate(-3deg); }
-    75% { transform: scale(1.1) rotate(3deg); }
-  }
-
-  .win-message p {
-    color: white;
-    font-size: 32px;
-    font-weight: 700;
-    margin-bottom: 40px;
-    font-family: 'Nunito', sans-serif;
-  }
-
-  .win-message button {
-    padding: 20px 60px;
-    font-size: 26px;
-    font-weight: 800;
-    background: linear-gradient(135deg, #4CAF50, #45a049);
-    color: white;
-    border: none;
-    border-radius: 45px;
-    cursor: pointer;
-    box-shadow: 0 6px 20px rgba(76,175,80,0.5);
-    transition: all 0.3s;
-    font-family: 'Nunito', sans-serif;
-  }
-
-  .win-message button:hover {
-    transform: scale(1.1);
-    box-shadow: 0 8px 30px rgba(76,175,80,0.7);
-  }
-
-  @keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-  }
-
-  .confetti {
-    position: fixed;
-    width: 14px;
-    height: 14px;
-    background: #f00;
-    animation: fall 3s linear forwards;
-    z-index: 999;
-  }
-
-  @keyframes fall {
-    to {
-      transform: translateY(100vh) rotate(720deg);
-      opacity: 0;
-    }
-  }
-
-  /* ==================== АДАПТИВНАЯ ВЕРСИЯ ==================== */
-  
-  @media screen and (max-width: 1200px) {
-    .cell {
-      width: 180px;
-      height: 180px;
-      padding: 12px;
-    }
-    
-    .cell-label {
-      font-size: 16px;
-      max-width: 180px;
-    }
-    
-    .cell-number {
-      font-size: 18px;
-      padding: 4px 12px;
-    }
-    
-    .cat {
-      width: 150px;
-      height: 150px;
-    }
-  }
-
-  @media screen and (max-width: 1024px) {
-    .start-popup {
-      padding: 30px;
-    }
-    
-    .popup-cat-image {
-      width: 120px;
-      height: 120px;
-    }
-    
-    .popup-title {
-      font-size: 26px;
-    }
-    
-    .popup-rules p {
-      font-size: 14px;
-    }
-    
-    .start-button {
-      font-size: 24px;
-      padding: 18px;
-    }
-    
-    .cell {
-      width: 150px;
-      height: 150px;
-      padding: 10px;
-    }
-    
-    .cell-label {
-      font-size: 14px;
-      max-width: 150px;
-    }
-    
-    .cell-number {
-      font-size: 16px;
-      padding: 3px 10px;
-    }
-    
-    .cat {
-      width: 120px;
-      height: 120px;
-    }
-    
-    .dice-container {
-      width: 75px;
-      height: 75px;
-      top: 15px;
-      right: 15px;
-    }
-    
-    .face {
-      width: 75px;
-      height: 75px;
-      padding: 12px;
-    }
-    
-    .face-1 { transform: rotateY(0deg) translateZ(37px); }
-    .face-6 { transform: rotateY(180deg) translateZ(37px); }
-    .face-3 { transform: rotateY(90deg) translateZ(37px); }
-    .face-4 { transform: rotateY(-90deg) translateZ(37px); }
-    .face-2 { transform: rotateX(90deg) translateZ(37px); }
-    .face-5 { transform: rotateX(-90deg) translateZ(37px); }
-    
-    .dice-value {
-      top: 100px;
-      right: 30px;
-      width: 38px;
-      height: 38px;
-      font-size: 18px;
-    }
-    
-    .roll-hint {
-      top: 148px;
-      font-size: 11px;
-      width: 60px;
-    }
-  }
-  
-  @media screen and (max-width: 768px) {
-    .game-container {
-      padding: 10px 10px 100px 10px;
-    }
-    
-    .start-popup {
-      padding: 25px;
-    }
-    
-    .popup-cat-image {
-      width: 100px;
-      height: 100px;
-    }
-    
-    .popup-title {
-      font-size: 22px;
-      margin-bottom: 20px;
-    }
-    
-    .popup-rules {
-      padding: 20px;
-    }
-    
-    .popup-rules h3 {
-      font-size: 18px;
-    }
-    
-    .popup-rules p {
-      font-size: 13px;
-    }
-    
-    .start-button {
-      font-size: 20px;
-      padding: 15px;
-    }
-    
-    .cell {
-      width: 110px;
-      height: 110px;
-      border-radius: 20px;
-      border-width: 4px;
-      padding: 8px;
-    }
-    
-    .cell-label {
-      font-size: 12px;
-      max-width: 110px;
-    }
-    
-    .cell-number {
-      font-size: 14px;
-      padding: 2px 8px;
-    }
-    
-    .cat {
-      width: 85px;
-      height: 85px;
-    }
-    
-    .dice-container {
-      width: 65px;
-      height: 65px;
-      top: auto;
-      bottom: 20px;
-      right: 15px;
-    }
-    
-    .face {
-      width: 65px;
-      height: 65px;
-      padding: 10px;
-    }
-    
-    .face-1 { transform: rotateY(0deg) translateZ(32px); }
-    .face-6 { transform: rotateY(180deg) translateZ(32px); }
-    .face-3 { transform: rotateY(90deg) translateZ(32px); }
-    .face-4 { transform: rotateY(-90deg) translateZ(32px); }
-    .face-2 { transform: rotateX(90deg) translateZ(32px); }
-    .face-5 { transform: rotateX(-90deg) translateZ(32px); }
-    
-    .dice-value {
-      top: auto;
-      bottom: 95px;
-      right: 25px;
-      width: 32px;
-      height: 32px;
-      font-size: 16px;
-    }
-    
-    .roll-hint {
-      display: none;
-    }
-    
-    .win-message h1 {
-      font-size: 48px;
-    }
-    
-    .win-message p {
-      font-size: 22px;
-    }
-    
-    .win-message button {
-      padding: 15px 40px;
-      font-size: 20px;
-    }
-  }
-  
-  @media screen and (max-width: 480px) {
-    .game-container {
-      padding: 5px 5px 90px 5px;
-    }
-    
-    .start-popup {
-      padding: 20px;
-    }
-    
-    .popup-cat-image {
-      width: 80px;
-      height: 80px;
-    }
-    
-    .popup-title {
-      font-size: 20px;
-    }
-    
-    .popup-rules {
-      padding: 15px;
-    }
-    
-    .popup-rules h3 {
-      font-size: 16px;
-    }
-    
-    .popup-rules p {
-      font-size: 12px;
-    }
-    
-    .start-button {
-      font-size: 18px;
-      padding: 12px;
-    }
-    
-    .cell {
-      width: 80px;
-      height: 80px;
-      border-radius: 16px;
-      padding: 6px;
-    }
-    
-    .cell-label {
-      font-size: 10px;
-      max-width: 80px;
-    }
-    
-    .cell-number {
-      font-size: 12px;
-      padding: 2px 6px;
-    }
-    
-    .cat {
-      width: 60px;
-      height: 60px;
-    }
-    
-    .dice-container {
-      width: 55px;
-      height: 55px;
-      bottom: 15px;
-      right: 10px;
-    }
-    
-    .face {
-      width: 55px;
-      height: 55px;
-      padding: 8px;
-    }
-    
-    .face-1 { transform: rotateY(0deg) translateZ(27px); }
-    .face-6 { transform: rotateY(180deg) translateZ(27px); }
-    .face-3 { transform: rotateY(90deg) translateZ(27px); }
-    .face-4 { transform: rotateY(-90deg) translateZ(27px); }
-    .face-2 { transform: rotateX(90deg) translateZ(27px); }
-    .face-5 { transform: rotateX(-90deg) translateZ(27px); }
-    
-    .dice-value {
-      bottom: 80px;
-      right: 18px;
-      width: 28px;
-      height: 28px;
-      font-size: 14px;
-    }
-  }
-  
-  @media screen and (max-height: 500px) and (orientation: landscape) {
-    .game-container {
-      padding: 10px 10px 10px 10px;
-    }
-    
-    .board-wrapper {
-      max-width: 100%;
-    }
-    
-    .start-popup {
-      padding: 20px;
-    }
-    
-    .popup-cat-image {
-      width: 80px;
-      height: 80px;
-    }
-    
-    .popup-title {
-      font-size: 20px;
-      margin-bottom: 15px;
-    }
-    
-    .popup-rules {
-      padding: 15px;
-      margin-bottom: 20px;
-    }
-    
-    .start-button {
-      font-size: 18px;
-      padding: 12px;
-    }
-    
-    .cell {
-      width: 100px;
-      height: 100px;
-      padding: 8px;
-    }
-    
-    .cell-label {
-      font-size: 11px;
-      max-width: 100px;
-    }
-    
-    .cell-number {
-      font-size: 13px;
-    }
-    
-    .cat {
-      width: 75px;
-      height: 75px;
-    }
-    
-    .dice-container {
-      width: 60px;
-      height: 60px;
-      top: 10px;
-      right: 10px;
-      bottom: auto;
-    }
-    
-    .face {
-      width: 60px;
-      height: 60px;
-      padding: 10px;
-    }
-    
-    .face-1 { transform: rotateY(0deg) translateZ(30px); }
-    .face-6 { transform: rotateY(180deg) translateZ(30px); }
-    .face-3 { transform: rotateY(90deg) translateZ(30px); }
-    .face-4 { transform: rotateY(-90deg) translateZ(30px); }
-    .face-2 { transform: rotateX(90deg) translateZ(30px); }
-    .face-5 { transform: rotateX(-90deg) translateZ(30px); }
-    
-    .dice-value {
-      top: 80px;
-      right: 18px;
-      bottom: auto;
-      width: 30px;
-      height: 30px;
-      font-size: 14px;
-    }
-    
-    .roll-hint {
-      display: none;
-    }
-  }
-</style>
-</head>
-<body>
-
-<!-- АУДИО ФАЙЛЫ -->
-<audio id="soundJump" src="assets/sounds/cartoon-jump.mp3" preload="auto"></audio>
-<audio id="soundDiceRoll" src="assets/sounds/dice-roll.mp3" preload="auto"></audio>
-<audio id="soundWin" src="assets/sounds/win.mp3" preload="auto"></audio>
-
-<!-- СТАРТОВЫЙ ПОПАП -->
-<div class="start-popup-overlay" id="startPopup">
-  <div class="start-popup">
-    <div class="popup-cat-image">
-      <img src="assets/cat/cat2.png" alt="Кот Манул">
-    </div>
-    
-    <h2 class="popup-title">🎲 <span>Кот-ходилка</span> 🎲</h2>
-    
-    <div class="popup-rules">
-      <h3>📋 Правила игры:</h3>
-      <p>Привет, друг! Помоги коту манулу добежать до финиша!</p>
-      <p>Бросай кубик, делай ходы и <strong>называй слово</strong>, на которое он прыгнет! <strong>Четко произноси звук!</strong></p>
-      <em>💡 Для усложнения, можете придумать предложение с этим словом.</em>
-    </div>
-    
-    <button class="start-button" onclick="startGame()">🎮 СТАРТ</button>
-  </div>
-</div>
-
-<!-- ИГРА -->
-<div class="game-container">
-  <div class="board-wrapper">
-    <div class="board" id="board">
-      <div class="board-inner" id="boardInner">
-        <svg class="path-svg" id="pathSvg">
-          <path class="path-line" id="pathLine" />
-        </svg>
-      </div>
-    </div>
-  </div>
-
-  <!-- Кот -->
-  <div class="cat" id="cat">
-    <img src="assets/cat/cat.png" alt="Кот" id="catImg">
-  </div>
-
-  <!-- 3D Кубик -->
-  <div class="dice-container" id="diceContainer" onclick="rollDice()">
-    <div class="dice" id="dice">
-      <div class="face face-1"><div class="dot"></div></div>
-      <div class="face face-2"><div class="dot"></div><div class="dot"></div></div>
-      <div class="face face-3"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
-      <div class="face face-4"><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
-      <div class="face face-5"><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
-      <div class="face face-6"><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
-    </div>
-  </div>
-  
-  <!-- Число на кубике -->
-  <div class="dice-value" id="diceValue"></div>
-  
-  <div class="roll-hint">Кликни<br>бросить</div>
-
-  <!-- Сообщение о победе -->
-  <div class="win-message" id="winMessage">
-    <h1>🎉 ПОБЕДА! 🎉</h1>
-    <p>Кот добрался до финиша!</p>
-    <button onclick="resetGame()">Играть снова</button>
-  </div>
-</div>
-
-<script>
-  const TOTAL_CELLS = 18;
-  const COLS = 6;
-  const ROWS = 3;
-  let currentCell = 1;
-  let isRolling = false;
-  let isMoving = false;
-  let currentDiceValue = 0;
-  let gameStarted = false;
-
-  const soundJump = document.getElementById('soundJump');
-  const soundDiceRoll = document.getElementById('soundDiceRoll');
-  const soundWin = document.getElementById('soundWin');
-
-  function playSound(audio) {
-    if (audio) {
-      audio.currentTime = 0;
-      audio.play().catch(e => console.log('Звук не воспроизведён:', e));
-    }
-  }
-
-  const cellLabels = [
-    'старт',    // 1
-    'рак',      // 2
-    'ракета',   // 3
-    'радуга',   // 4
-    'роза',     // 5
-    'нора',     // 6
-    'рыба',     // 7
-    'комар',    // 8
-    'сыр',      // 9
-    'топор',    // 10
-    'ворон',    // 11
-    'гитара',   // 12
-    'ромашка',  // 13
-    'корона',   // 14
-    'барабан',  // 15
-    'корова',   // 16
-    'морковь',  // 17
-    'финиш'     // 18
-  ];
-
-  function startGame() {
-    gameStarted = true;
-    document.getElementById('startPopup').classList.add('hidden');
-  }
-
-  function getCellPosition(cellNum) {
-    const boardInner = document.getElementById('boardInner');
-    const boardWidth = boardInner.offsetWidth;
-    const boardHeight = boardInner.offsetHeight;
-    
-    const cellSize = Math.min(boardWidth / COLS, boardHeight / ROWS) * 0.82;
-    const paddingX = boardWidth * 0.05;
-    const paddingY = boardHeight * 0.12;
-    
-    const row = Math.floor((cellNum - 1) / COLS);
-    const colInRow = (cellNum - 1) % COLS;
-    const col = row % 2 === 0 ? colInRow : (COLS - 1 - colInRow);
-    
-    const x = paddingX + col * ((boardWidth - 2 * paddingX) / (COLS - 1)) - cellSize / 2;
-    const y = paddingY + row * ((boardHeight - 2 * paddingY) / (ROWS - 1)) - cellSize / 2;
-    
-    return { 
-      x, 
-      y, 
-      centerX: x + cellSize / 2, 
-      centerY: y + cellSize / 2,
-      size: cellSize
-    };
-  }
-
-  function createBoard() {
-    const boardInner = document.getElementById('boardInner');
-    const svg = document.getElementById('pathSvg');
-    boardInner.innerHTML = '';
-    boardInner.appendChild(svg);
-    
-    const pathPoints = [];
-
-    for (let i = 1; i <= TOTAL_CELLS; i++) {
-      const pos = getCellPosition(i);
-      
-      const wrapper = document.createElement('div');
-      wrapper.className = 'cell-wrapper';
-      wrapper.id = `cell-wrapper-${i}`;
-      wrapper.style.left = pos.x + 'px';
-      wrapper.style.top = pos.y + 'px';
-      
-      const cell = document.createElement('div');
-      cell.className = 'cell';
-      cell.id = `cell-${i}`;
-      cell.style.width = pos.size + 'px';
-      cell.style.height = pos.size + 'px';
-
-      const img = document.createElement('img');
-      img.className = 'cell-image';
-      img.src = `assets/cells/cell-${String(i).padStart(2, '0')}.png`;
-      img.alt = cellLabels[i - 1];
-      cell.appendChild(img);
-      
-      const num = document.createElement('div');
-      num.className = 'cell-number';
-      num.textContent = i;
-      cell.appendChild(num);
-
-      if (i === 1) cell.classList.add('start');
-      if (i === TOTAL_CELLS) cell.classList.add('finish');
-
-      wrapper.appendChild(cell);
-      
-      const label = document.createElement('div');
-      label.className = 'cell-label';
-      label.textContent = cellLabels[i - 1];
-      wrapper.appendChild(label);
-
-      boardInner.appendChild(wrapper);
-      pathPoints.push(`${pos.centerX},${pos.centerY}`);
-    }
-
-    const pathLine = document.getElementById('pathLine');
-    pathLine.setAttribute('d', `M ${pathPoints.join(' L ')}`);
-  }
-
-  function positionCat(cellNum) {
-    const cat = document.getElementById('cat');
-    const cellWrapper = document.getElementById(`cell-wrapper-${cellNum}`);
-    
-    if (!cellWrapper) return;
-    
-    const cellRect = cellWrapper.getBoundingClientRect();
-    const cellSize = cellRect.width;
-    
-    // Кот = ~80% от размера клетки (крупный)
-    const catSize = cellSize * 0.8;
-    
-    // Кот ходит по ВЕРХНЕМУ краю картинки
-    const centerX = cellRect.left + (cellSize - catSize) / 2;
-    const topY = cellRect.top - catSize * 0.25 + window.scrollY;
-    
-    cat.style.width = catSize + 'px';
-    cat.style.height = catSize + 'px';
-    cat.style.left = centerX + 'px';
-    cat.style.top = topY + 'px';
-  }
-
-  function getRotationForFace(faceNumber) {
-    const rotations = {
-      1: { x: 0, y: 0 },
-      2: { x: -90, y: 0 },
-      3: { x: 0, y: -90 },
-      4: { x: 0, y: 90 },
-      5: { x: 90, y: 0 },
-      6: { x: 180, y: 0 }
-    };
-    return rotations[faceNumber];
-  }
-
-  function rollDice() {
-    if (!gameStarted) return;
-    if (isRolling || isMoving) return;
-    if (currentCell >= TOTAL_CELLS) return;
-
-    isRolling = true;
-    const dice = document.getElementById('dice');
-    const diceValue = document.getElementById('diceValue');
-    
-    playSound(soundDiceRoll);
-    
-    const result = Math.floor(Math.random() * 6) + 1;
-    currentDiceValue = result;
-    
-    const targetRotation = getRotationForFace(result);
-    const extraSpins = 2;
-    const finalX = targetRotation.x + (extraSpins * 360);
-    const finalY = targetRotation.y + (extraSpins * 360);
-    
-    diceValue.classList.remove('show');
-    dice.style.transform = `rotateX(${finalX}deg) rotateY(${finalY}deg)`;
-    
-    setTimeout(() => {
-      diceValue.textContent = result;
-      diceValue.classList.add('show');
-      
-      isRolling = false;
-      moveCat(result);
-    }, 1000);
-  }
-
-  async function moveCat(steps) {
-    isMoving = true;
-    const cat = document.getElementById('cat');
-    
-    for (let i = 0; i < steps; i++) {
-      if (currentCell >= TOTAL_CELLS) break;
-      
-      currentCell++;
-      
-      playSound(soundJump);
-      
-      cat.classList.add('moving');
-      positionCat(currentCell);
-      
-      await new Promise(resolve => setTimeout(resolve, 700));
-      cat.classList.remove('moving');
-      
-      await new Promise(resolve => setTimeout(resolve, 150));
-    }
-
-    isMoving = false;
-
-    if (currentCell >= TOTAL_CELLS) {
-      setTimeout(() => {
-        showWinMessage();
-        createConfetti();
-      }, 500);
-    }
-  }
-
-  function showWinMessage() {
-    playSound(soundWin);
-    document.getElementById('winMessage').classList.add('show');
-  }
-
-  function createConfetti() {
-    const colors = ['#f44336', '#e91e63', '#9c27b0', '#673ab7', '#3f51b5', '#2196f3', '#03a9f4', '#00bcd4', '#009688', '#4CAF50', '#8BC34A', '#CDDC39', '#FFEB3B', '#FFC107', '#FF9800', '#FF5722'];
-    
-    for (let i = 0; i < 100; i++) {
-      setTimeout(() => {
-        const confetti = document.createElement('div');
-        confetti.className = 'confetti';
-        confetti.style.left = Math.random() * 100 + 'vw';
-        confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
-        confetti.style.animationDuration = (Math.random() * 2 + 2) + 's';
-        confetti.style.borderRadius = Math.random() > 0.5 ? '50%' : '0';
-        document.body.appendChild(confetti);
-        
-        setTimeout(() => confetti.remove(), 4000);
-      }, i * 30);
-    }
-  }
-
-  function resetGame() {
-    currentCell = 1;
-    currentDiceValue = 0;
-    document.getElementById('winMessage').classList.remove('show');
-    document.getElementById('diceValue').classList.remove('show');
-    document.getElementById('dice').style.transform = 'rotateX(0deg) rotateY(0deg)';
-    positionCat(1);
-    
-    document.querySelectorAll('.confetti').forEach(c => c.remove());
-  }
-
-  window.addEventListener('load', () => {
-    createBoard();
-    setTimeout(() => {
-      positionCat(1);
-    }, 200);
-  });
-
-  window.addEventListener('resize', () => {
-    createBoard();
-    setTimeout(() => {
-      positionCat(currentCell);
-    }, 100);
-  });
-
-  window.addEventListener('scroll', () => {
-    positionCat(currentCell);
-  });
-
-  window.addEventListener('keydown', (e) => {
-    if (e.code === 'Space') {
-      e.preventDefault();
-      rollDice();
-    }
-  });
-</script>
-
-</body>
-</html>
