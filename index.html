@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>🐱 Кот-ходилка с 3D кубиком</title>
+<title> Кот-ходилка с 3D кубиком</title>
 <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
 <style>
   * { 
@@ -210,11 +210,11 @@
     50% { transform: translateY(-10px); }
   }
 
-  /* ==================== ИГРОВОЕ ПОЛЕ ==================== */
+  /* ==================== ИГРОВОЕ ПОЛЕ 2×8 ==================== */
   .board-wrapper {
     position: relative;
     width: 100%;
-    max-width: 1000px;
+    max-width: 1400px;
     margin: 0 auto;
     padding-top: 20px;
   }
@@ -223,8 +223,8 @@
     position: relative;
     width: 100%;
     height: 0;
-    padding-bottom: 100%;
-    max-height: 1000px;
+    padding-bottom: 45%; /* 1400×630 ≈ 2.2:1, но с отступами между рядами */
+    max-height: 700px;
   }
 
   .board-inner {
@@ -244,8 +244,8 @@
   }
 
   .cell {
-    width: 200px;
-    height: 200px;
+    width: 160px;
+    height: 160px;
     background: linear-gradient(135deg, #ffffff 0%, #f0f0f0 100%);
     border: 5px solid #fff;
     border-radius: 25px;
@@ -305,7 +305,7 @@
     text-align: center;
     text-shadow: 0 2px 6px rgba(0,0,0,0.6);
     font-family: 'Nunito', sans-serif;
-    max-width: 200px;
+    max-width: 160px;
     word-wrap: break-word;
     line-height: 1.2;
   }
@@ -352,11 +352,11 @@
     }
   }
 
-  /* Кот — меньше клетки, чтобы не закрывать картинку */
+  /* Кот — ходит по верхнему краю картинок */
   .cat {
     position: fixed;
-    width: 130px;
-    height: 130px;
+    width: 100px;
+    height: 100px;
     z-index: 50;
     transition: all 0.7s cubic-bezier(0.68, -0.55, 0.265, 1.55);
     filter: drop-shadow(0 8px 16px rgba(0,0,0,0.5));
@@ -624,24 +624,24 @@
     }
     
     .cell {
-      width: 160px;
-      height: 160px;
+      width: 130px;
+      height: 130px;
       padding: 8px;
     }
     
     .cell-label {
-      font-size: 14px;
-      max-width: 160px;
+      font-size: 13px;
+      max-width: 130px;
     }
     
     .cell-number {
-      font-size: 16px;
+      font-size: 15px;
       padding: 3px 10px;
     }
     
     .cat {
-      width: 100px;
-      height: 100px;
+      width: 80px;
+      height: 80px;
     }
     
     .dice-container {
@@ -703,26 +703,26 @@
     }
     
     .cell {
-      width: 120px;
-      height: 120px;
+      width: 100px;
+      height: 100px;
       border-radius: 18px;
       border-width: 4px;
       padding: 6px;
     }
     
     .cell-label {
-      font-size: 12px;
-      max-width: 120px;
+      font-size: 11px;
+      max-width: 100px;
     }
     
     .cell-number {
-      font-size: 14px;
+      font-size: 13px;
       padding: 2px 8px;
     }
     
     .cat {
-      width: 75px;
-      height: 75px;
+      width: 60px;
+      height: 60px;
     }
     
     .dice-container {
@@ -796,25 +796,25 @@
     }
     
     .cell {
-      width: 90px;
-      height: 90px;
+      width: 75px;
+      height: 75px;
       border-radius: 14px;
       padding: 5px;
     }
     
     .cell-label {
-      font-size: 10px;
-      max-width: 90px;
+      font-size: 9px;
+      max-width: 75px;
     }
     
     .cell-number {
-      font-size: 12px;
+      font-size: 11px;
       padding: 2px 6px;
     }
     
     .cat {
-      width: 55px;
-      height: 55px;
+      width: 45px;
+      height: 45px;
     }
     
     .dice-container {
@@ -867,23 +867,23 @@
     }
     
     .cell {
-      width: 110px;
-      height: 110px;
+      width: 90px;
+      height: 90px;
       padding: 6px;
     }
     
     .cell-label {
-      font-size: 11px;
-      max-width: 110px;
+      font-size: 10px;
+      max-width: 90px;
     }
     
     .cell-number {
-      font-size: 13px;
+      font-size: 12px;
     }
     
     .cat {
-      width: 70px;
-      height: 70px;
+      width: 55px;
+      height: 55px;
     }
     
     .dice-container {
@@ -932,7 +932,7 @@
       <em>💡 Для усложнения, можете придумать предложение с этим словом.</em>
     </div>
     
-    <button class="start-button" onclick="startGame()">🎮 СТАРТ</button>
+    <button class="start-button" onclick="startGame()"> СТАРТ</button>
   </div>
 </div>
 
@@ -972,7 +972,7 @@
 
   <!-- Сообщение о победе -->
   <div class="win-message" id="winMessage">
-    <h1> ПОБЕДА! 🎉</h1>
+    <h1>🎉 ПОБЕДА! </h1>
     <p>Кот добрался до финиша!</p>
     <button onclick="resetGame()">Играть снова</button>
   </div>
@@ -980,14 +980,13 @@
 
 <script>
   const TOTAL_CELLS = 16;
-  const COLS = 4;
-  const ROWS = 4;
+  const COLS = 8;
+  const ROWS = 2;
   let currentCell = 1;
   let isRolling = false;
   let isMoving = false;
   let currentDiceValue = 0;
   let gameStarted = false;
-  let cellPositions = []; // Храним позиции всех клеток
 
   const soundJump = document.getElementById('soundJump');
   const soundDiceRoll = document.getElementById('soundDiceRoll');
@@ -1030,8 +1029,9 @@
     const boardHeight = boardInner.offsetHeight;
     
     const cellSize = Math.min(boardWidth / COLS, boardHeight / ROWS) * 0.85;
-    const paddingX = boardWidth * 0.08;
-    const paddingY = boardHeight * 0.08;
+    const paddingX = boardWidth * 0.05;
+    // Увеличенное расстояние между рядами (было 0.08, стало 0.15)
+    const paddingY = boardHeight * 0.15;
     
     const row = Math.floor((cellNum - 1) / COLS);
     const colInRow = (cellNum - 1) % COLS;
@@ -1056,11 +1056,9 @@
     boardInner.appendChild(svg);
     
     const pathPoints = [];
-    cellPositions = []; // Очищаем массив позиций
 
     for (let i = 1; i <= TOTAL_CELLS; i++) {
       const pos = getCellPosition(i);
-      cellPositions.push(pos); // Сохраняем позицию
       
       const wrapper = document.createElement('div');
       wrapper.className = 'cell-wrapper';
@@ -1113,17 +1111,18 @@
     const cellRect = cellWrapper.getBoundingClientRect();
     const cellSize = cellRect.width;
     
-    // Размер кота = 65% от размера клетки
-    const catSize = cellSize * 0.65;
+    // Размер кота
+    const catSize = cellSize * 0.6;
     
-    // Центрируем кота в клетке
+    // Кот ходит по ВЕРХНЕМУ краю картинки
+    // Позиционируем кота так, чтобы его нижняя часть была на верхнем крае клетки
     const centerX = cellRect.left + (cellSize - catSize) / 2;
-    const centerY = cellRect.top + (cellSize - catSize) / 2 + window.scrollY;
+    const topY = cellRect.top - catSize * 0.3 + window.scrollY; // Кот стоит на верхнем краю
     
     cat.style.width = catSize + 'px';
     cat.style.height = catSize + 'px';
     cat.style.left = centerX + 'px';
-    cat.style.top = centerY + 'px';
+    cat.style.top = topY + 'px';
   }
 
   function getRotationForFace(faceNumber) {
@@ -1235,7 +1234,6 @@
 
   window.addEventListener('load', () => {
     createBoard();
-    // Ждем немного чтобы DOM полностью отрисовался
     setTimeout(() => {
       positionCat(1);
     }, 200);
