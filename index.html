@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title> Кот-ходилка с 3D кубиком</title>
+<title>🐱 Кот-ходилка с 3D кубиком</title>
 <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
 <style>
   * { 
@@ -649,6 +649,8 @@
     /* Доминошки увеличены на 20%: 60px → 72px */
     .cell-top { width: 72px; height: 36px; border-width: 2px; border-radius: 14px 14px 0 0; padding: 3px 5px; }
     .cell-bottom { width: 72px; height: 72px; border-width: 2px; border-radius: 0 0 14px 14px; padding: 7px; }
+    /* Картинки увеличены на 20%: 85% → 102% (но ограничим до 95% для безопасности) */
+    .cell-bottom img.cell-image { width: 95%; height: 95%; }
     .cell-top .cell-name { font-size: 10px; }
     
     .mobile-disclaimer { display: block; }
@@ -677,6 +679,8 @@
     /* Доминошки увеличены на 20%: 48px → 58px */
     .cell-top { width: 58px; height: 29px; border-radius: 12px 12px 0 0; padding: 2px 4px; }
     .cell-bottom { width: 58px; height: 58px; border-radius: 0 0 12px 12px; padding: 6px; }
+    /* Картинки увеличены на 20%: 85% → 102% (но ограничим до 95% для безопасности) */
+    .cell-bottom img.cell-image { width: 95%; height: 95%; }
     .cell-top .cell-name { font-size: 8px; }
     
     /* Кубик как прежде: 50px */
@@ -697,6 +701,8 @@
     /* Доминошки увеличены на 20%: 55px → 66px */
     .cell-top { width: 66px; height: 33px; }
     .cell-bottom { width: 66px; height: 66px; }
+    /* Картинки увеличены на 20% */
+    .cell-bottom img.cell-image { width: 95%; height: 95%; }
     .cell-top .cell-name { font-size: 9px; }
     
     .mobile-disclaimer { display: none; }
@@ -720,16 +726,16 @@
       <img src="assets/cat/cat2.png" alt="Кот Манул">
     </div>
     
-    <h2 class="popup-title">🎲 <span>Кот-ходилка</span> 🎲</h2>
+    <h2 class="popup-title">🎲 <span>Кот-ходилка</span> </h2>
     
     <div class="popup-rules">
-      <h3>📋 Правила игры:</h3>
+      <h3> Правила игры:</h3>
       <p>Привет, друг! Помоги коту манулу добежать до финиша!</p>
       <p>Бросай кубик, делай ходы и <strong>называй слово</strong>, на которое он прыгнет! <strong>Четко произноси звук!</strong></p>
       <em>💡 Для усложнения, можете придумать предложение с этим словом.</em>
     </div>
     
-    <button class="start-button" onclick="startGame()">🎮 СТАРТ</button>
+    <button class="start-button" onclick="startGame()"> СТАРТ</button>
   </div>
 </div>
 
@@ -744,7 +750,7 @@
     </div>
     
     <div class="mobile-disclaimer">
-      <div class="icon"></div>
+      <div class="icon">📱</div>
       <p>Для корректной работы переверните экран</p>
     </div>
   </div>
@@ -921,7 +927,8 @@
     const boardRect = boardInner.getBoundingClientRect();
     
     const isMobileNow = window.innerWidth <= 768;
-    const catSize = isMobileNow ? 94 : 140;
+    // Кот уменьшен на 10% на мобильных: 94px → 85px
+    const catSize = isMobileNow ? 85 : 140;
     
     const catCenterX = pos.x + pos.squareSize / 2;
     const catLeft = catCenterX - catSize / 2;
