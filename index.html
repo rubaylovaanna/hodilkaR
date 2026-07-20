@@ -380,6 +380,29 @@
     75% { transform: translateY(-25px) scale(1.1) rotate(8deg); }
   }
 
+  .mobile-disclaimer {
+    display: none;
+    text-align: center;
+    padding: 20px;
+    margin-top: 20px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    backdrop-filter: blur(10px);
+  }
+
+  .mobile-disclaimer p {
+    color: white;
+    font-size: 14px;
+    font-weight: 700;
+    font-family: 'Nunito', sans-serif;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+  }
+
+  .mobile-disclaimer .icon {
+    font-size: 32px;
+    margin-bottom: 10px;
+  }
+
   .dice-container {
     position: fixed;
     top: 20px;
@@ -590,30 +613,6 @@
     }
   }
 
-  /* Дисклеймер для мобильной версии */
-  .mobile-disclaimer {
-    display: none;
-    text-align: center;
-    padding: 20px;
-    margin-top: 20px;
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 15px;
-    backdrop-filter: blur(10px);
-  }
-
-  .mobile-disclaimer p {
-    color: white;
-    font-size: 16px;
-    font-weight: 700;
-    font-family: 'Nunito', sans-serif;
-    text-shadow: 0 2px 4px rgba(0,0,0,0.3);
-  }
-
-  .mobile-disclaimer .icon {
-    font-size: 40px;
-    margin-bottom: 10px;
-  }
-
   @media screen and (max-width: 1200px) {
     .cell-top { width: 90px; height: 45px; }
     .cell-bottom { width: 90px; height: 90px; }
@@ -647,10 +646,14 @@
     .popup-rules p { font-size: 13px; }
     .start-button { font-size: 20px; padding: 15px; }
     
-    .cell-top { width: 60px; height: 30px; border-width: 2px; border-radius: 12px 12px 0 0; padding: 2px 4px; }
-    .cell-bottom { width: 60px; height: 60px; border-width: 2px; border-radius: 0 0 12px 12px; padding: 6px; }
-    .cell-top .cell-name { font-size: 9px; }
+    /* Доминошки увеличены на 20%: 60px → 72px */
+    .cell-top { width: 72px; height: 36px; border-width: 2px; border-radius: 14px 14px 0 0; padding: 3px 5px; }
+    .cell-bottom { width: 72px; height: 72px; border-width: 2px; border-radius: 0 0 14px 14px; padding: 7px; }
+    .cell-top .cell-name { font-size: 10px; }
     
+    .mobile-disclaimer { display: block; }
+    
+    /* Кубик как прежде: 60px */
     .dice-container { width: 60px; height: 60px; top: auto; bottom: 20px; right: 15px; }
     .dice-value { top: auto; bottom: 90px; right: 25px; width: 30px; height: 30px; font-size: 16px; }
     .roll-hint { display: none; }
@@ -658,11 +661,6 @@
     .win-message h1 { font-size: 48px; }
     .win-message p { font-size: 22px; }
     .win-message button { padding: 15px 40px; font-size: 20px; }
-    
-    /* Показываем дисклеймер на мобильных */
-    .mobile-disclaimer {
-      display: block;
-    }
   }
   
   @media screen and (max-width: 480px) {
@@ -676,20 +674,14 @@
     .popup-rules p { font-size: 12px; }
     .start-button { font-size: 18px; padding: 12px; }
     
-    .cell-top { width: 48px; height: 24px; border-radius: 10px 10px 0 0; padding: 2px 3px; }
-    .cell-bottom { width: 48px; height: 48px; border-radius: 0 0 10px 10px; padding: 5px; }
-    .cell-top .cell-name { font-size: 7px; }
+    /* Доминошки увеличены на 20%: 48px → 58px */
+    .cell-top { width: 58px; height: 29px; border-radius: 12px 12px 0 0; padding: 2px 4px; }
+    .cell-bottom { width: 58px; height: 58px; border-radius: 0 0 12px 12px; padding: 6px; }
+    .cell-top .cell-name { font-size: 8px; }
     
+    /* Кубик как прежде: 50px */
     .dice-container { width: 50px; height: 50px; bottom: 15px; right: 10px; }
     .dice-value { bottom: 75px; right: 18px; width: 25px; height: 25px; font-size: 14px; }
-    
-    .mobile-disclaimer p {
-      font-size: 14px;
-    }
-    
-    .mobile-disclaimer .icon {
-      font-size: 35px;
-    }
   }
   
   @media screen and (max-height: 500px) and (orientation: landscape) {
@@ -702,18 +694,17 @@
     .popup-rules { padding: 15px; margin-bottom: 20px; }
     .start-button { font-size: 18px; padding: 12px; }
     
-    .cell-top { width: 55px; height: 28px; }
-    .cell-bottom { width: 55px; height: 55px; }
-    .cell-top .cell-name { font-size: 8px; }
+    /* Доминошки увеличены на 20%: 55px → 66px */
+    .cell-top { width: 66px; height: 33px; }
+    .cell-bottom { width: 66px; height: 66px; }
+    .cell-top .cell-name { font-size: 9px; }
     
+    .mobile-disclaimer { display: none; }
+    
+    /* Кубик как прежде: 55px */
     .dice-container { width: 55px; height: 55px; top: 10px; right: 10px; bottom: auto; }
     .dice-value { top: 75px; right: 18px; bottom: auto; width: 28px; height: 28px; font-size: 14px; }
     .roll-hint { display: none; }
-    
-    /* Скрываем дисклеймер в ландшафте */
-    .mobile-disclaimer {
-      display: none;
-    }
   }
 </style>
 </head>
@@ -732,13 +723,13 @@
     <h2 class="popup-title">🎲 <span>Кот-ходилка</span> 🎲</h2>
     
     <div class="popup-rules">
-      <h3>Правила игры:</h3>
+      <h3>📋 Правила игры:</h3>
       <p>Привет, друг! Помоги коту манулу добежать до финиша!</p>
-      <p>Бросай кубик, делай ход и <strong>называй слово</strong>, на которое он прыгнет! <strong>Четко произноси звук!</strong></p>
-      <em>💡Для усложнения, можете придумать предложение с этим словом.</em>
+      <p>Бросай кубик, делай ходы и <strong>называй слово</strong>, на которое он прыгнет! <strong>Четко произноси звук!</strong></p>
+      <em>💡 Для усложнения, можете придумать предложение с этим словом.</em>
     </div>
     
-    <button class="start-button" onclick="startGame()">СТАРТ</button>
+    <button class="start-button" onclick="startGame()">🎮 СТАРТ</button>
   </div>
 </div>
 
@@ -751,12 +742,11 @@
         </svg>
       </div>
     </div>
-  </div>
-
-  <!-- Дисклеймер для мобильной версии -->
-  <div class="mobile-disclaimer" id="mobileDisclaimer">
-    <div class="icon">📱</div>
-    <p>Для корректной работы переверните экран</p>
+    
+    <div class="mobile-disclaimer">
+      <div class="icon"></div>
+      <p>Для корректной работы переверните экран</p>
+    </div>
   </div>
 
   <div class="cat" id="cat">
@@ -776,7 +766,7 @@
   
   <div class="dice-value" id="diceValue"></div>
   
-  <div class="roll-hint">Кликни, чтобы<br>бросить кубик</div>
+  <div class="roll-hint">Кликни<br>бросить</div>
 
   <div class="win-message" id="winMessage">
     <h1>🎉 ПОБЕДА! 🎉</h1>
@@ -931,7 +921,7 @@
     const boardRect = boardInner.getBoundingClientRect();
     
     const isMobileNow = window.innerWidth <= 768;
-    const catSize = isMobileNow ? 110 : 140;
+    const catSize = isMobileNow ? 94 : 140;
     
     const catCenterX = pos.x + pos.squareSize / 2;
     const catLeft = catCenterX - catSize / 2;
