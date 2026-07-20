@@ -646,16 +646,15 @@
     .popup-rules p { font-size: 13px; }
     .start-button { font-size: 20px; padding: 15px; }
     
-    /* Доминошки увеличены на 20%: 60px → 72px */
-    .cell-top { width: 72px; height: 36px; border-width: 2px; border-radius: 14px 14px 0 0; padding: 3px 5px; }
-    .cell-bottom { width: 72px; height: 72px; border-width: 2px; border-radius: 0 0 14px 14px; padding: 7px; }
-    /* Картинки увеличены на 20%: 85% → 102% (но ограничим до 95% для безопасности) */
-    .cell-bottom img.cell-image { width: 95%; height: 95%; }
-    .cell-top .cell-name { font-size: 10px; }
+    /* Доминошки ещё крупнее: 72px → 90px (+25%) */
+    .cell-top { width: 90px; height: 45px; border-width: 2px; border-radius: 16px 16px 0 0; padding: 4px 6px; }
+    .cell-bottom { width: 90px; height: 90px; border-width: 2px; border-radius: 0 0 16px 16px; padding: 4px; }
+    /* Картинки ещё +20%: 95% → 100% (занимают всю клетку) */
+    .cell-bottom img.cell-image { width: 100%; height: 100%; border-radius: 12px; }
+    .cell-top .cell-name { font-size: 11px; }
     
     .mobile-disclaimer { display: block; }
     
-    /* Кубик как прежде: 60px */
     .dice-container { width: 60px; height: 60px; top: auto; bottom: 20px; right: 15px; }
     .dice-value { top: auto; bottom: 90px; right: 25px; width: 30px; height: 30px; font-size: 16px; }
     .roll-hint { display: none; }
@@ -676,14 +675,13 @@
     .popup-rules p { font-size: 12px; }
     .start-button { font-size: 18px; padding: 12px; }
     
-    /* Доминошки увеличены на 20%: 48px → 58px */
-    .cell-top { width: 58px; height: 29px; border-radius: 12px 12px 0 0; padding: 2px 4px; }
-    .cell-bottom { width: 58px; height: 58px; border-radius: 0 0 12px 12px; padding: 6px; }
-    /* Картинки увеличены на 20%: 85% → 102% (но ограничим до 95% для безопасности) */
-    .cell-bottom img.cell-image { width: 95%; height: 95%; }
-    .cell-top .cell-name { font-size: 8px; }
+    /* Доминошки ещё крупнее: 58px → 72px (+24%) */
+    .cell-top { width: 72px; height: 36px; border-radius: 14px 14px 0 0; padding: 3px 5px; }
+    .cell-bottom { width: 72px; height: 72px; border-radius: 0 0 14px 14px; padding: 3px; }
+    /* Картинки ещё +20% */
+    .cell-bottom img.cell-image { width: 100%; height: 100%; border-radius: 10px; }
+    .cell-top .cell-name { font-size: 9px; }
     
-    /* Кубик как прежде: 50px */
     .dice-container { width: 50px; height: 50px; bottom: 15px; right: 10px; }
     .dice-value { bottom: 75px; right: 18px; width: 25px; height: 25px; font-size: 14px; }
   }
@@ -698,16 +696,15 @@
     .popup-rules { padding: 15px; margin-bottom: 20px; }
     .start-button { font-size: 18px; padding: 12px; }
     
-    /* Доминошки увеличены на 20%: 55px → 66px */
-    .cell-top { width: 66px; height: 33px; }
-    .cell-bottom { width: 66px; height: 66px; }
-    /* Картинки увеличены на 20% */
-    .cell-bottom img.cell-image { width: 95%; height: 95%; }
-    .cell-top .cell-name { font-size: 9px; }
+    /* Доминошки ещё крупнее: 66px → 82px */
+    .cell-top { width: 82px; height: 41px; }
+    .cell-bottom { width: 82px; height: 82px; }
+    /* Картинки ещё +20% */
+    .cell-bottom img.cell-image { width: 100%; height: 100%; border-radius: 12px; }
+    .cell-top .cell-name { font-size: 10px; }
     
     .mobile-disclaimer { display: none; }
     
-    /* Кубик как прежде: 55px */
     .dice-container { width: 55px; height: 55px; top: 10px; right: 10px; bottom: auto; }
     .dice-value { top: 75px; right: 18px; bottom: auto; width: 28px; height: 28px; font-size: 14px; }
     .roll-hint { display: none; }
@@ -726,16 +723,16 @@
       <img src="assets/cat/cat2.png" alt="Кот Манул">
     </div>
     
-    <h2 class="popup-title">🎲 <span>Кот-ходилка</span> </h2>
+    <h2 class="popup-title">🎲 <span>Кот-ходилка</span> 🎲</h2>
     
     <div class="popup-rules">
-      <h3> Правила игры:</h3>
+      <h3>📋 Правила игры:</h3>
       <p>Привет, друг! Помоги коту манулу добежать до финиша!</p>
       <p>Бросай кубик, делай ходы и <strong>называй слово</strong>, на которое он прыгнет! <strong>Четко произноси звук!</strong></p>
       <em>💡 Для усложнения, можете придумать предложение с этим словом.</em>
     </div>
     
-    <button class="start-button" onclick="startGame()"> СТАРТ</button>
+    <button class="start-button" onclick="startGame()">🎮 СТАРТ</button>
   </div>
 </div>
 
@@ -838,7 +835,9 @@
     const boardWidth = boardInner.offsetWidth;
     const boardHeight = boardInner.offsetHeight;
     
-    const squareSize = Math.min(boardWidth / COLS, boardHeight / (ROWS * 1.5)) * 0.65;
+    // Увеличенный коэффициент для мобильных: 0.65 → 0.82 (+26%)
+    const sizeCoeff = isMobile ? 0.82 : 0.65;
+    const squareSize = Math.min(boardWidth / COLS, boardHeight / (ROWS * 1.5)) * sizeCoeff;
     const topSquareHeight = squareSize / 2;
     const dominoHeight = squareSize + topSquareHeight;
     
@@ -927,7 +926,6 @@
     const boardRect = boardInner.getBoundingClientRect();
     
     const isMobileNow = window.innerWidth <= 768;
-    // Кот уменьшен на 10% на мобильных: 94px → 85px
     const catSize = isMobileNow ? 85 : 140;
     
     const catCenterX = pos.x + pos.squareSize / 2;
