@@ -646,10 +646,10 @@
     .popup-rules p { font-size: 13px; }
     .start-button { font-size: 20px; padding: 15px; }
     
-    /* Доминошки ещё крупнее: 72px → 90px (+25%) */
+    /* Доминошки крупные: 90×90px */
     .cell-top { width: 90px; height: 45px; border-width: 2px; border-radius: 16px 16px 0 0; padding: 4px 6px; }
     .cell-bottom { width: 90px; height: 90px; border-width: 2px; border-radius: 0 0 16px 16px; padding: 4px; }
-    /* Картинки ещё +20%: 95% → 100% (занимают всю клетку) */
+    /* Картинки на всю клетку */
     .cell-bottom img.cell-image { width: 100%; height: 100%; border-radius: 12px; }
     .cell-top .cell-name { font-size: 11px; }
     
@@ -675,10 +675,10 @@
     .popup-rules p { font-size: 12px; }
     .start-button { font-size: 18px; padding: 12px; }
     
-    /* Доминошки ещё крупнее: 58px → 72px (+24%) */
+    /* Доминошки крупные: 72×72px */
     .cell-top { width: 72px; height: 36px; border-radius: 14px 14px 0 0; padding: 3px 5px; }
     .cell-bottom { width: 72px; height: 72px; border-radius: 0 0 14px 14px; padding: 3px; }
-    /* Картинки ещё +20% */
+    /* Картинки на всю клетку */
     .cell-bottom img.cell-image { width: 100%; height: 100%; border-radius: 10px; }
     .cell-top .cell-name { font-size: 9px; }
     
@@ -686,27 +686,28 @@
     .dice-value { bottom: 75px; right: 18px; width: 25px; height: 25px; font-size: 14px; }
   }
   
+  /* Горизонтальная ориентация мобильных - такие же крупные доминошки */
   @media screen and (max-height: 500px) and (orientation: landscape) {
     .game-container { padding: 10px; }
-    .board-wrapper { max-width: 100%; padding-top: 60px; }
-    .board { padding-bottom: 60%; }
+    .board-wrapper { max-width: 100%; padding-top: 80px; }
+    .board { padding-bottom: 65%; }
     .start-popup { padding: 20px; }
     .popup-cat-image { width: 80px; height: 80px; }
     .popup-title { font-size: 20px; margin-bottom: 15px; }
     .popup-rules { padding: 15px; margin-bottom: 20px; }
     .start-button { font-size: 18px; padding: 12px; }
     
-    /* Доминошки ещё крупнее: 66px → 82px */
-    .cell-top { width: 82px; height: 41px; }
-    .cell-bottom { width: 82px; height: 82px; }
-    /* Картинки ещё +20% */
+    /* Доминошки крупные как в портрете: 90×90px */
+    .cell-top { width: 90px; height: 45px; border-width: 2px; border-radius: 16px 16px 0 0; padding: 4px 6px; }
+    .cell-bottom { width: 90px; height: 90px; border-width: 2px; border-radius: 0 0 16px 16px; padding: 4px; }
+    /* Картинки на всю клетку */
     .cell-bottom img.cell-image { width: 100%; height: 100%; border-radius: 12px; }
-    .cell-top .cell-name { font-size: 10px; }
+    .cell-top .cell-name { font-size: 11px; }
     
     .mobile-disclaimer { display: none; }
     
-    .dice-container { width: 55px; height: 55px; top: 10px; right: 10px; bottom: auto; }
-    .dice-value { top: 75px; right: 18px; bottom: auto; width: 28px; height: 28px; font-size: 14px; }
+    .dice-container { width: 60px; height: 60px; top: 10px; right: 10px; bottom: auto; }
+    .dice-value { top: 80px; right: 18px; bottom: auto; width: 30px; height: 30px; font-size: 16px; }
     .roll-hint { display: none; }
   }
 </style>
@@ -723,10 +724,10 @@
       <img src="assets/cat/cat2.png" alt="Кот Манул">
     </div>
     
-    <h2 class="popup-title">🎲 <span>Кот-ходилка</span> 🎲</h2>
+    <h2 class="popup-title">🎲 <span>Кот-ходилка</span> </h2>
     
     <div class="popup-rules">
-      <h3>📋 Правила игры:</h3>
+      <h3> Правила игры:</h3>
       <p>Привет, друг! Помоги коту манулу добежать до финиша!</p>
       <p>Бросай кубик, делай ходы и <strong>называй слово</strong>, на которое он прыгнет! <strong>Четко произноси звук!</strong></p>
       <em>💡 Для усложнения, можете придумать предложение с этим словом.</em>
@@ -835,7 +836,7 @@
     const boardWidth = boardInner.offsetWidth;
     const boardHeight = boardInner.offsetHeight;
     
-    // Увеличенный коэффициент для мобильных: 0.65 → 0.82 (+26%)
+    // Для мобильных (включая landscape) увеличенный коэффициент
     const sizeCoeff = isMobile ? 0.82 : 0.65;
     const squareSize = Math.min(boardWidth / COLS, boardHeight / (ROWS * 1.5)) * sizeCoeff;
     const topSquareHeight = squareSize / 2;
